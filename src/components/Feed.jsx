@@ -1,7 +1,7 @@
 import React from 'react';
 import Post from './Post';
 
-class Feed extends React.Component {
+export default class Feed extends React.Component {
     constructor(props){
         super(props)
         this.state = {
@@ -32,5 +32,3 @@ class Feed extends React.Component {
         )
     }
 }
-
-export default Feed;

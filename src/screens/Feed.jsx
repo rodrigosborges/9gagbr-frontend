@@ -1,10 +1,12 @@
 import React from 'react';
-import Feed from '../components/Feed'
+import SideBar from '../components/SideBar'
 
-class FeedScreen extends React.Component{
+export default class FeedScreen extends React.Component{
   render (){
-    return (<Feed/>)
+    return (
+      <div>
+        <SideBar />
+      </div>
+    )
   }
 }
-
-export default FeedScreen;
