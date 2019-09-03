@@ -5,9 +5,47 @@
   -webkit-box-shadow: 0px 21px 116px -60px rgba(0,0,0,0.55);
   -moz-box-shadow: 0px 21px 116px -60px rgba(0,0,0,0.55);
   box-shadow: 0px 21px 116px -60px rgba(0,0,0,0.55);
+  background-color: white;
 }
 
 .logo-navbar{
   width: 50px;
   height: 50px;
+}
+
+.navbar-top{
+  background-color: #292a39 !important;
+  background-image:
+  linear-gradient(
+    to top right, 
+    #292a39, #525472
+  );
+}
+
+.sidebar-content{
+  background-image:
+    linear-gradient(
+      to bottom, 
+      #292a39, #525472
+    );
+  width: 250px;
+  height: 100%;
+}
+
+.button-navbar{
+  color: #A69CAC;
+  border-color: #A69CAC;
+}
+
+.button-navbar:hover {
+  background-color: #A69CAC; /* Green */
+  color: #292a39;
+  border-color: #292a39;
+}
+
+.image-background{
+  background-image: url("background.jpeg");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
 }

@@ -20,14 +20,16 @@ export default class Feed extends React.Component {
 
     render(){
         return (
-            <div className="container">
-                {this.state.posts.map((post, key) => 
-                    <div className="row" key={key}>
-                        <div className="col-md-6 offset-md-3">
-                            <Post title={post.title} url={post.url}/>
+            <div className="image-background">
+                <div className="container background-white">
+                    {this.state.posts.map((post, key) => 
+                        <div className="row" key={key}>
+                            <div className="col-md-10">
+                                <Post title={post.title} url={post.url}/>
+                            </div>
                         </div>
-                    </div>
-                )}
+                    )}
+                </div>
             </div>
         )
     }
