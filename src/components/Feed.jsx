@@ -24,7 +24,7 @@ export default class Feed extends React.Component {
                 <div className="container background-white">
                     {this.state.posts.map((post, key) => 
                         <div className="row" key={key}>
-                            <div className="col-md-10">
+                            <div className="col-lg-8">
                                 <Post title={post.title} url={post.url}/>
                             </div>
                         </div>

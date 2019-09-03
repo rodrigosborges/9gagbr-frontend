@@ -14,7 +14,7 @@ export default class NavBar extends React.Component {
             <nav className="navbar navbar-dark bg-dark navbar-expand-md navbar-top">
 
                 <button className="btn button-navbar my-2 my-sm-0 mr-3" type="submit" onClick={() => this.props.onSetSidebarOpen(!this.props.sidebarOpen)}>
-                    <i className={"fa fa-"+(!this.props.sidebarOpen ? 'list' : 'close')} />
+                    <i className={"fa fa-"+(!this.props.sidebarOpen ? 'list' : 'times')} />
                 </button>
 
                 <a className="" href="/">

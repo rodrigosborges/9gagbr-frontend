@@ -10,7 +10,7 @@ export default class SideBar extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-            sidebarOpen: true
+            sidebarOpen: false
         }
 
         this.mediaQueryChanged = this.mediaQueryChanged.bind(this)
@@ -19,6 +19,7 @@ export default class SideBar extends React.Component {
 
     componentWillMount() {
         mql.addListener(this.mediaQueryChanged)
+        this.mediaQueryChanged()
     }
 
     componentWillUnmount() {

@@ -1,4 +1,5 @@
 import React from 'react';
+import Logo from '../icon.png'
 
 export default class Post extends React.Component {
     constructor(props){
@@ -11,8 +12,25 @@ export default class Post extends React.Component {
     render(){
         return (
             <div className="postContainer">
-                <img src={this.props.url} className="image"/><br/>
-                <span>{this.props.title}</span>
+                <div className="text-left ml-3 mt-2"><img className="img-post-icon" src={Logo} /> Meme · 2h</div>
+                <h4 className="text-left ml-3 mt-3 mb-3">{this.props.title}</h4>
+                <img src={this.props.url} className="image-post"/><br/>
+                <div className="container ml-3 mt-3 mb-2">
+                    <div className="row">
+                        <button className="btn button-navbar my-2 my-sm-0 mr-3" type="submit" onClick={() => {}}>
+                            <i className={"fa fa-arrow-up"} />
+                        </button>
+                        <button className="btn button-navbar my-2 my-sm-0 mr-3" type="submit" onClick={() => {}}>
+                            <i className={"fa fa-arrow-down"} />
+                        </button>
+                        <button className="btn button-navbar my-2 my-sm-0 mr-3" type="submit" onClick={() => {}}>
+                            <i className="fa fa-comment" />
+                        </button>
+                        <button className="btn button-navbar my-2 my-sm-0 mr-3" type="submit" onClick={() => {}}>
+                            <i className="fa fa-share-alt" />
+                        </button>
+                    </div>
+                </div>
             </div>
         )
     }

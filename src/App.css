@@ -44,8 +44,59 @@
 }
 
 .image-background{
-  background-image: url("background.jpeg");
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
+  background-image: url("background.jpg");
+}
+
+.img-post-icon{
+  width: 30px;
+  height: 30px;
+}
+
+.section-sidebar{
+  padding-top: 14px;
+}
+
+.hr-title-sidebar{ 
+  border: 0;
+  height: 1px;
+  margin-top:6px;
+  padding:0px;
+  background-image: linear-gradient(to right, #292a39, #A69CAC, #292a39);
+}
+
+.section-sidebar-title{
+  font-size: 22px;
+  color: #A69CAC;
+  padding-left: 14px;
+  padding-right: 14px;
+}
+
+.image-post{
+  max-width: 100%;
+}
+
+.sidebar-link{
+  font-size: 18px;
+}
+
+.section-sidebar-link{
+  margin: 0px 14px 0px 14px;
+  padding: 5px;
+}
+
+.category-label{
+  padding-left:5px;
+  position:relative; 
+  top:2px;
+}
+
+.a-sidebar-link, .a-sidebar-link:hover{
+  text-decoration:none; 
+  color:inherit;
+}
+
+@media (max-width: 992px) {
+  .container {
+     width: 98% !important;
+  }
 }
