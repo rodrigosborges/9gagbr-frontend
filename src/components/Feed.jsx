@@ -1,5 +1,6 @@
 import React from 'react';
 import Post from './Post';
+import '../starsnight.css'
 
 export default class Feed extends React.Component {
     constructor(props){
@@ -20,8 +21,11 @@ export default class Feed extends React.Component {
 
     render(){
         return (
-            <div className="image-background">
-                <div className="container background-white">
+            <div id="div-posts" className="div-posts">
+                <div id='stars'></div>
+                <div id='stars2'></div>
+                <div id='stars3'></div>
+                <div className="container">
                     {this.state.posts.map((post, key) => 
                         <div className="row" key={key}>
                             <div className="col-lg-8">
