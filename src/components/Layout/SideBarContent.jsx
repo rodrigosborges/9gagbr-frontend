@@ -5,6 +5,23 @@ export default class SideBarContent extends React.Component{
     constructor(props){
         super(props)
         this.state = {
+            popular: [
+                {
+                    icon: 'fab fa-hotjar',
+                    label: 'Em alta',
+                    url: '#',
+                },
+                {
+                    icon: 'fa fa-clock',
+                    label: 'Recentes',
+                    url: '#',
+                },
+                {
+                    icon: 'fa fa-random',
+                    label: 'Aleatório',
+                    url: '#',
+                }
+            ],
             categories: [
                 {
                     id: 1,
@@ -36,20 +53,15 @@ export default class SideBarContent extends React.Component{
                 <div className="section-sidebar">
                     <span className="section-sidebar-title">Popular</span>
                     <hr className="hr-title-sidebar"/>
-                    <a className="a-sidebar-link" href="#">
-                        <div className="button-navbar section-sidebar-link">
-                            <span className="sidebar-link">
-                                <i className="fab fa-hotjar"></i> Em alta
-                            </span>
-                        </div>
-                    </a>
-                    <a className="a-sidebar-link" href="#">
-                        <div className="button-navbar section-sidebar-link">
-                            <span className="sidebar-link">
-                                <i className="fa fa-clock"></i> Recentes
-                            </span>
-                        </div>
-                    </a>
+                    {this.state.popular.map((item) => 
+                        <a className="a-sidebar-link" href={item.url}>
+                            <div className="button-navbar section-sidebar-link">
+                                <span className="sidebar-link">
+                                    <i className={item.icon}></i> {item.label}
+                                </span>
+                            </div>
+                        </a>
+                    )}
                 </div>
 
                 <div className="section-sidebar">

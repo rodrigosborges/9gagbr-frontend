@@ -1,5 +1,5 @@
 import React from 'react';
-import Logo from '../icon.png'
+import Logo from '../../icon.png'
 
 export default class NavBar extends React.Component {
     constructor(props){
@@ -27,9 +27,12 @@ export default class NavBar extends React.Component {
 
                 <div className="collapse navbar-collapse" id="navbarSupportedContent">
 
-                    <ul className="navbar-nav mr-auto">
+                    <ul className="navbar-nav ml-3 mr-auto">
+                    </ul>
+
+                    <ul className="navbar-nav mx-2">
                         <li className="nav-item">
-                            <a className="nav-link" href="/">Aleatório</a>
+                            <a className="btn button-navbar my-2 my-sm-0 mr-3" href="/">Entrar</a> 
                         </li>
                     </ul>
 

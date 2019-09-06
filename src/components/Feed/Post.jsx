@@ -1,5 +1,5 @@
 import React from 'react';
-import Logo from '../icon.png'
+import Logo from '../../icon.png'
 
 export default class Post extends React.Component {
     constructor(props){

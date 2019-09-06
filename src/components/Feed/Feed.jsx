@@ -1,6 +1,6 @@
 import React from 'react';
 import Post from './Post';
-import '../starsnight.css'
+import '../../starsnight.css'
 
 export default class Feed extends React.Component {
     constructor(props){
@@ -28,7 +28,7 @@ export default class Feed extends React.Component {
                 <div className="container">
                     {this.state.posts.map((post, key) => 
                         <div className="row" key={key}>
-                            <div className="col-lg-8">
+                            <div className="offset-lg-2 col-lg-8">
                                 <Post title={post.title} url={post.url}/>
                             </div>
                         </div>

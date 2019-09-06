@@ -1,6 +1,6 @@
 import React from "react"
 import Sidebar from "react-sidebar";
-import Feed from './Feed'
+import Feed from '../Feed/Feed'
 import NavBar from './NavBar'
 import SideBarContent from './SideBarContent'
 
@@ -40,7 +40,10 @@ export default class SideBar extends React.Component {
                 sidebar={<SideBarContent /> }
                 docked={this.state.sidebarOpen}
             >
-                <NavBar sidebarOpen={this.state.sidebarOpen} onSetSidebarOpen={this.onSetSidebarOpen}/>
+                <NavBar 
+                    sidebarOpen={this.state.sidebarOpen} 
+                    onSetSidebarOpen={this.onSetSidebarOpen}
+                />
                 <Feed />
             </Sidebar>
         )
