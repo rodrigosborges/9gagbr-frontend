@@ -13,11 +13,7 @@ export default class NavBar extends React.Component {
         return (
             <nav className="navbar navbar-dark bg-dark navbar-expand-md navbar-top">
 
-                <button className="btn button-navbar my-2 my-sm-0 mr-3" type="submit" onClick={() => this.props.onSetSidebarOpen(!this.props.sidebarOpen)}>
-                    <i className={"fa fa-"+(!this.props.sidebarOpen ? 'list' : 'times')} />
-                </button>
-
-                <a className="" href="/">
+                <a className="ml-5" href="/">
                     <img src={Logo} className="logo-navbar"></img>
                 </a>
 
@@ -32,7 +28,7 @@ export default class NavBar extends React.Component {
 
                     <ul className="navbar-nav mx-2">
                         <li className="nav-item">
-                            <a className="btn button-navbar my-2 my-sm-0 mr-3" href="/">Entrar</a> 
+                            <a className="btn button-navbar my-2 my-sm-0 mr-3" href="/login">Entrar</a> 
                         </li>
                     </ul>
 

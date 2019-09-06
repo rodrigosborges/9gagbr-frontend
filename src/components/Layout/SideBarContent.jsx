@@ -50,11 +50,12 @@ export default class SideBarContent extends React.Component{
     render(){
         return (
             <div className="sidebar-content">
+
                 <div className="section-sidebar">
                     <span className="section-sidebar-title">Popular</span>
                     <hr className="hr-title-sidebar"/>
-                    {this.state.popular.map((item) => 
-                        <a className="a-sidebar-link" href={item.url}>
+                    {this.state.popular.map((item, key) => 
+                        <a key={key} className="a-sidebar-link" href={item.url}>
                             <div className="button-navbar section-sidebar-link">
                                 <span className="sidebar-link">
                                     <i className={item.icon}></i> {item.label}

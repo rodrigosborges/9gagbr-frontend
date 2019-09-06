@@ -1,12 +1,11 @@
 import React from "react"
 import Sidebar from "react-sidebar";
-import Feed from '../Feed/Feed'
 import NavBar from './NavBar'
 import SideBarContent from './SideBarContent'
 
 const mql = window.matchMedia(`(min-width: 800px)`);
 
-export default class SideBar extends React.Component {
+export default class Layout extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
@@ -36,16 +35,24 @@ export default class SideBar extends React.Component {
 
     render() {
         return (
+            <div>
             <Sidebar
-                sidebar={<SideBarContent /> }
-                docked={this.state.sidebarOpen}
+                sidebar={
+                    <SideBarContent/> 
+                }
+                docked={this.state.sidebarOpen && window.innerWidth > 800}
+                open={this.state.sidebarOpen && window.innerWidth < 800}
             >
-                <NavBar 
-                    sidebarOpen={this.state.sidebarOpen} 
-                    onSetSidebarOpen={this.onSetSidebarOpen}
-                />
-                <Feed />
+                <div className={(this.state.sidebarOpen && window.innerWidth < 800) ? "sidebar-button-hide" : "sidebar-button-show"}>
+                    <button className="btn button-navbar" type="submit" onClick={() => this.onSetSidebarOpen(!this.state.sidebarOpen)}>
+                        <i className={"fa fa-"+(!this.state.sidebarOpen ? 'list' : 'times')} />
+                    </button>
+                </div>
+                <NavBar />
+                {this.props.content}
             </Sidebar>
+
+            </div>
         )
     }
 }
