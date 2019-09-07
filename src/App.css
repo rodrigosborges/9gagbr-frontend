@@ -46,10 +46,6 @@
   border-color: #292a39;
 }
 
-.image-background{
-  background-image: url("background.jpg");
-}
-
 .img-post-icon{
   width: 30px;
   height: 30px;
@@ -128,7 +124,7 @@
 }
 
 .login-content{
-  height: 400px;
+  height: 480px;
 }
 
 .login-background{
@@ -138,11 +134,25 @@
   height: 100%;
 }
 
+.form-login-info{
+  background-color: transparent;
+  height: 430px;
+  position: absolute;
+  top: 25px;
+  right: 30px;
+  width: 30%;
+}
+
+.form-login-info-title{
+  color: white;
+  font-size: 22px;
+}
+
 .form-login{
   background-color: white;
-  height: 450px;
+  height: 550px;
   position: absolute;
-  top: -25px;
+  top: -35px;
   left: 60px;
   -webkit-box-shadow: 0px 21px 116px -60px rgba(0,0,0,1);
   -moz-box-shadow: 0px 21px 116px -60px rgba(0,0,0,1);
@@ -150,4 +160,5 @@
   -moz-box-shadow:    inset 0 0 2px #000000;
   -webkit-box-shadow: inset 0 0 2px #000000;
   box-shadow:         inset 0 0 2px #000000;
+  width: 60%;
 }
