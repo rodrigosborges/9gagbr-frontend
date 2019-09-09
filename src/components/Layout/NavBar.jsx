@@ -1,5 +1,6 @@
 import React from 'react';
 import Logo from '../../icon.png'
+import { Link } from 'react-router-dom';
 
 export default class NavBar extends React.Component {
     constructor(props){
@@ -28,7 +29,9 @@ export default class NavBar extends React.Component {
 
                     <ul className="navbar-nav mx-2">
                         <li className="nav-item">
-                            <a className="btn button-navbar my-2 my-sm-0 mr-3" href="/login">Entrar</a> 
+                            <Link to="/login" className="btn button-navbar my-2 my-sm-0 mr-3">
+                                Entrar
+                            </Link>
                         </li>
                     </ul>
 

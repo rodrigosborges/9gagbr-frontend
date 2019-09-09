@@ -36,14 +36,20 @@
 }
 
 .button-navbar{
-  color: #A69CAC;
-  border-color: #A69CAC;
+  color: #A69CAC !important;
+  border-color: #A69CAC !important;
 }
 
 .button-navbar:hover {
-  background-color: #A69CAC; /* Green */
-  color: #292a39;
-  border-color: #292a39;
+  background-color: #A69CAC !important; /* Green */
+  color: #292a39 !important;
+  border-color: #292a39 !important;
+}
+
+.button-navbar:focus {
+  background-color: #A69CAC !important; /* Green */
+  color: #292a39 !important;
+  border-color: #292a39 !important;
 }
 
 .img-post-icon{
@@ -134,12 +140,21 @@
   height: 100%;
 }
 
-.form-login-info{
+.form-login-info-right{
   background-color: transparent;
   height: 430px;
   position: absolute;
   top: 25px;
   right: 30px;
+  width: 30%;
+}
+
+.form-login-info-left{
+  background-color: transparent;
+  height: 430px;
+  position: absolute;
+  top: 25px;
+  left: 30px;
   width: 30%;
 }
 
@@ -153,7 +168,7 @@
   height: 550px;
   position: absolute;
   top: -35px;
-  left: 60px;
+  left: 7%;
   -webkit-box-shadow: 0px 21px 116px -60px rgba(0,0,0,1);
   -moz-box-shadow: 0px 21px 116px -60px rgba(0,0,0,1);
   box-shadow: 0px 21px 116px -60px rgba(0,0,0,1);
@@ -161,4 +176,41 @@
   -webkit-box-shadow: inset 0 0 2px #000000;
   box-shadow:         inset 0 0 2px #000000;
   width: 60%;
+}
+
+.transition-login-right{
+  transition: transform 0.5s;
+  transform: translate(44%, 0px);
+}
+
+.transition-login-left{
+  transition: transform 0.5s;
+  transform: translate(0px, 0px);
+}
+
+.btn{
+  display:inline-block;font-weight:400;color:#212529;text-align:center;vertical-align:middle;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none;background-color:transparent;border:1px solid transparent;padding:.375rem .75rem;font-size:1rem;line-height:1.5;border-radius:.25rem;transition:color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out
+}
+
+i.active {
+  color: #A69CAC !important;
+}
+
+label.active {
+  color: #A69CAC !important;
+}
+
+input:focus {
+  border-bottom: 1px solid #A69CAC !important;
+  box-shadow: 0 1px 0 0 #A69CAC !important;
+}
+
+.form-login-title{
+  color: #A69CAC;
+  font-size: 30px;
+  font-weight: bold;
+}
+
+.form-color{
+  color: #A69CAC !important;
 }
