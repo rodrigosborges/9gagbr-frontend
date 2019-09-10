@@ -21,7 +21,7 @@ export default class Feed extends React.Component {
 
     render(){
         return (
-            <div id="div-content" className="div-content">
+            <div id="div-content" className="div-background">
                 <div id='stars'></div>
                 <div id='stars2'></div>
                 <div id='stars3'></div>
