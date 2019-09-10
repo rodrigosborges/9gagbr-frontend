@@ -249,7 +249,7 @@ export default class Feed extends React.Component {
                             }
                         </div>
                         <div className="text-center mt-5">
-                            <Link to="/" className="btn btn-lg button-navbar mt-5">
+                            <Link to="/" className="btn btn-lg button-navbar">
                                 Voltar para a página principal
                             </Link>
                         </div>
