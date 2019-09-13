@@ -12,7 +12,10 @@ export default class Post extends React.Component {
     render(){
         return (
             <div className="postContainer">
-                <div className="text-left ml-3 mt-2"><img className="img-post-icon" src={Logo} /> Meme · 2h</div>
+                <div className="text-left ml-3 mt-2 form-inline">
+                    <img className="img-post-icon" src={this.props.url_category} /> 
+                    <div className="mt-1 ml-2"> {this.props.category} · {this.props.time}</div>
+                </div>
                 <h4 className="text-left ml-3 mt-3 mb-3">{this.props.title}</h4>
                 <img src={this.props.url} className="image-post"/><br/>
                 <div className="container ml-3 mt-3 mb-2">
