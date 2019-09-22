@@ -6,7 +6,7 @@ export default class NavBar extends React.Component {
     constructor(props){
         super(props)
         this.state = {
-
+            logado: true
         }
     }
 
@@ -27,13 +27,25 @@ export default class NavBar extends React.Component {
                     <ul className="navbar-nav ml-3 mr-auto">
                     </ul>
 
-                    <ul className="navbar-nav mx-2">
-                        <li className="nav-item">
-                            <Link to="/login" className="btn button-navbar my-2 my-sm-0 mr-3">
-                                Entrar
-                            </Link>
-                        </li>
-                    </ul>
+                    {this.state.logado && (
+                        <ul className="navbar-nav mx-2">
+                            <li className="nav-item">
+                                <Link to="/post/create" className="btn button-navbar my-2 my-sm-0 mr-3">
+                                        Novo meme
+                                </Link>
+                            </li>
+                        </ul>
+                    )}
+
+                    {!this.state.logado && (
+                        <ul className="navbar-nav mx-2">
+                            <li className="nav-item">
+                                <Link to="/login" className="btn button-navbar my-2 my-sm-0 mr-3">
+                                    Entrar
+                                </Link>
+                            </li>
+                        </ul>
+                    )}
 
                     <form className="form-inline">
                         <div className="form-group">

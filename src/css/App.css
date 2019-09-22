@@ -1,0 +1,138 @@
+.logo-navbar{
+  width: 50px;
+  height: 50px;
+}
+
+.navbar-top{
+  background-color: #292a39 !important;
+  background-image:
+  linear-gradient(
+    to top right, 
+    #292a39, #525472
+  );
+}
+
+.sidebar-content{
+  background-image:
+    linear-gradient(
+      to bottom, 
+      #292a39, #525472
+    );
+  width: 250px;
+  height: 100%;
+}
+
+.button-navbar{
+  color: #A69CAC !important;
+  border-color: #A69CAC !important;
+}
+
+.button-navbar:hover {
+  background-color: #A69CAC !important; /* Green */
+  color: #292a39 !important;
+  border-color: #292a39 !important;
+}
+
+.button-navbar:focus {
+  background-color: #A69CAC !important; /* Green */
+  color: #292a39 !important;
+  border-color: #292a39 !important;
+}
+
+.img-post-icon{
+  width: 30px;
+  height: 30px;
+}
+
+.section-sidebar{
+  padding-top: 14px;
+}
+
+.hr-title-sidebar{
+  border: 0;
+  height: 1px;
+  margin-top:6px;
+  padding:0px;
+  background-image: linear-gradient(to right, #292a39, #A69CAC, #292a39);
+}
+
+.section-sidebar-title{
+  font-size: 22px;
+  color: #A69CAC;
+  padding-left: 14px;
+  padding-right: 14px;
+}
+
+.sidebar-link{
+  font-size: 18px;
+}
+
+.section-sidebar-link{
+  margin: 0px 14px 0px 14px;
+  padding: 5px;
+}
+
+.category-label{
+  padding-left:5px;
+  position:relative; 
+  top:2px;
+}
+
+.a-sidebar-link, .a-sidebar-link:hover{
+  text-decoration:none; 
+  color:inherit;
+}
+
+@media (max-width: 992px) {
+  .container {
+     width: 98% !important;
+  }
+}
+
+.sidebar-button-hide{
+  position:absolute;
+  z-index:999;
+  left: 264px;
+  top: 14px;
+}
+
+.sidebar-button-show{
+  position:absolute;
+  z-index:999;
+  display: block;
+  left: 14px;
+  top: 14px;
+}
+
+i.active {
+  color: #A69CAC !important;
+}
+
+label.active {
+  color: #A69CAC !important;
+}
+
+input:focus {
+  border-bottom: 1px solid #A69CAC !important;
+  box-shadow: 0 1px 0 0 #A69CAC !important;
+}
+
+div::-webkit-scrollbar-track
+{
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+    border-radius: 10px;
+    background-color: #F5F5F5;
+}
+
+div::-webkit-scrollbar
+{
+    width: 12px;
+    background-color: #525472;
+}
+
+div::-webkit-scrollbar-thumb
+{
+    border-radius: 10px;
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
+    background-color: #525472;
+}

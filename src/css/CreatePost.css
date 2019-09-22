@@ -1,0 +1,19 @@
+.form-post{
+    padding: 10px;
+    text-align: center;
+    -moz-box-shadow:    inset 0 0 5px #000000;
+    -webkit-box-shadow: inset 0 0 5px #000000;
+    box-shadow:         inset 0 0 5px #000000;
+    background-color: white;
+}
+
+.div-background-ext{
+    display: flex;
+    align-items: center;
+}
+
+.form-post-title{
+    color: #A69CAC;
+    font-size: 30px;
+    font-weight: bold;
+}

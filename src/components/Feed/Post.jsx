@@ -9,7 +9,24 @@ export default class Post extends React.Component {
         }
     }
 
+    _getPostContent(){
+        var extension = this.props.url.split(".").pop()
+        if(['jpg', 'jpeg', 'png', 'gif'].includes(extension)){
+            return (
+                <img src={this.props.url} className="image-post"/>            
+            )
+        }else{
+            return (
+                <video autoPlay muted preload="auto" loop='loop' >
+                    <source src={this.props.url} className="image-post" type="video/mp4"/>
+                    Your browser does not support the video tag.
+                </video>
+            )
+        }
+    }
+
     render(){
+        const post_content = this._getPostContent()
         return (
             <div className="postContainer">
                 <div className="text-left ml-3 mt-2 form-inline">
@@ -17,7 +34,8 @@ export default class Post extends React.Component {
                     <div className="mt-1 ml-2"> {this.props.category} · {this.props.time}</div>
                 </div>
                 <h4 className="text-left ml-3 mt-3 mb-3">{this.props.title}</h4>
-                <img src={this.props.url} className="image-post"/><br/>
+                {post_content}
+                <br/>
                 <div className="container ml-3 mt-3 mb-2">
                     <div className="row">
                         <button className="btn button-navbar my-2 my-sm-0 mr-3" type="submit" onClick={() => {}}>

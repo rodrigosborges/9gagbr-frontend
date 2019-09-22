@@ -1,6 +1,7 @@
 import React from 'react';
 import Post from './Post';
-import '../../starsnight.css'
+import '../../css/Stars.css'
+import '../../css/Post.css'
 import axios from 'axios'
 
 export default class Feed extends React.Component {
@@ -33,26 +34,25 @@ export default class Feed extends React.Component {
         var datetime = new Date(date);
         var now = new Date();
         var sec_num = (now - datetime) / 1000;
+        var years    = Math.floor(sec_num / (3600 * 24* 30* 12));
         var months    = Math.floor(sec_num / (3600 * 24* 30));
         var days    = Math.floor(sec_num / (3600 * 24));
         var hours   = Math.floor((sec_num - (days * (3600 * 24)))/3600);
         var minutes = Math.floor((sec_num - (days * (3600 * 24)) - (hours * 3600)) / 60);
         var seconds = Math.floor(sec_num - (days * (3600 * 24)) - (hours * 3600) - (minutes * 60));
-    
-        // if (hours   < 10) {hours   = "0"+hours;}
-        // if (minutes < 10) {minutes = "0"+minutes;}
-        // if (seconds < 10) {seconds = "0"+seconds;}
 
-        if(months > 0)
-            return months+" meses"
+        if(years > 0)
+            return years+" ano"+(years > 1 ? "s" : "")
+        else if(months > 0)
+            return months+" mes"+(months > 1 ? "es" : "")
         else if(days > 0)
-            return days+" dias"
+            return days+" dia"+(days > 1 ? "s" : "")
         else if(hours > 0)
-            return hours+" horas"
+            return hours+" hora"+(hours > 1 ? "s" : "")
         else if(minutes > 0)
-            return minutes+" minutos"
+            return minutes+" minuto"+(minutes > 1 ? "s" : "")
         else
-            return seconds+" segundos"
+            return seconds+" segundo"+(seconds > 1 ? "s" : "")
     
     }
 
@@ -62,7 +62,7 @@ export default class Feed extends React.Component {
                 <div id='stars'></div>
                 <div id='stars2'></div>
                 <div id='stars3'></div>
-                <div className="container">
+                <div className="container h-100">
                     {this.state.posts.map((post, key) => 
                         <div className="row" key={key}>
                             <div className="offset-lg-2 col-lg-8">
