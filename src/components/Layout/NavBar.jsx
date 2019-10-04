@@ -37,7 +37,7 @@ export default class NavBar extends React.Component {
                         </ul>
                     )}
 
-                    {!this.state.logado && (
+                    {this.state.logado && (
                         <ul className="navbar-nav mx-2">
                             <li className="nav-item">
                                 <Link to="/login" className="btn button-navbar my-2 my-sm-0 mr-3">

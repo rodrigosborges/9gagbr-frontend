@@ -3,6 +3,10 @@
   height: 50px;
 }
 
+.error-label{
+  color: #f44336 !important;
+}
+
 .navbar-top{
   background-color: #292a39 !important;
   background-image:

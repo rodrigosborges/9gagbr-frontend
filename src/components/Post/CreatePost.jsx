@@ -17,7 +17,7 @@ export default class CreatePost extends React.Component {
                 <div id='stars2'></div>
                 <div id='stars3'></div>
                 <div className="container my-3">
-                    <div class="col-md-10 offset-md-1">
+                    <div className="col-md-10 offset-md-1">
                         <Form />
                     </div>
                 </div>

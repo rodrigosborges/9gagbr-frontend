@@ -1,5 +1,6 @@
 import React from 'react'
 import axios from 'axios'
+import { Link, Redirect } from 'react-router-dom';
 
 export default class SideBarContent extends React.Component{
 
@@ -10,23 +11,33 @@ export default class SideBarContent extends React.Component{
                 {
                     icon: 'fab fa-hotjar',
                     label: 'Em alta',
-                    url: '#',
+                    url: '/category/Em alta',
                 },
                 {
                     icon: 'fa fa-clock',
                     label: 'Recentes',
-                    url: '#',
+                    url: '/category/Recentes',
                 },
-                {
-                    icon: 'fa fa-random',
-                    label: 'Aleatório',
-                    url: '#',
-                }
             ],
             categories: [
-            ]
+            ],
+            aleatorio: null,
         }
+    }
+
+    componentDidMount(){
         this._getCategories()
+    }
+
+    _getRandom(e){
+        e.preventDefault()
+        axios.get('http://localhost:3001/post/Aleatório')
+        .then((res) => {
+            var post_id = res.data
+            this.setState({
+                aleatorio: (<Redirect to={'/post/'+post_id} />)
+            })
+        })
     }
 
     _getCategories(){
@@ -45,6 +56,10 @@ export default class SideBarContent extends React.Component{
     }
 
     render(){
+        if(this.state.aleatorio !== null){
+            return this.state.aleatorio
+        }
+
         return (
             <div className="sidebar-content">
 
@@ -52,14 +67,21 @@ export default class SideBarContent extends React.Component{
                     <span className="section-sidebar-title">Popular</span>
                     <hr className="hr-title-sidebar"/>
                     {this.state.popular.map((item, key) => 
-                        <a key={key} className="a-sidebar-link" href={item.url}>
+                        <Link key={key} className="a-sidebar-link" to={item.url}>
                             <div className="button-navbar section-sidebar-link">
                                 <span className="sidebar-link">
                                     <i className={item.icon}></i> {item.label}
                                 </span>
                             </div>
-                        </a>
+                        </Link>
                     )}
+                    <a key={3} href="/category/aleatorio" className="a-sidebar-link" onClick={(e) => this._getRandom(e)}>
+                        <div className="button-navbar section-sidebar-link">
+                            <span className="sidebar-link">
+                                <i className={'fa fa-random'}></i> Aleatório
+                            </span>
+                        </div>
+                    </a>
                 </div>
 
                 <div className="section-sidebar">
@@ -67,14 +89,14 @@ export default class SideBarContent extends React.Component{
                     <hr className="hr-title-sidebar"/>
                     {this.state.categories.map((category, key) => 
                         (
-                            <a key={key} className="a-sidebar-link" href="#">
+                            <Link key={key} className="a-sidebar-link" to={"/category/"+category.name}>
                                 <div className="button-navbar section-sidebar-link">
                                     <span className="sidebar-link">
                                         <img className="img-post-icon" src={category.url} />
                                         <span className="category-label">{category.name}</span>
                                     </span>
                                 </div>
-                            </a>
+                            </Link>
                         )
                     )}
                 </div>

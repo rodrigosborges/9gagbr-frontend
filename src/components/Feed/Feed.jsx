@@ -1,5 +1,5 @@
 import React from 'react';
-import Post from './Post';
+import Post from '../Post/Post';
 import '../../css/Stars.css'
 import '../../css/Post.css'
 import axios from 'axios'
@@ -10,19 +10,28 @@ export default class Feed extends React.Component {
         this.state = {
             posts : []
         }
-        this._getPosts()
+    }
+    
+    componentDidMount(){
+        this._getPosts(0)
     }
 
-    _getPosts(){
-        axios.get('http://localhost:3001/post/')
+    componentDidUpdate(){
+        this._getPosts(0)
+    }
+
+    _getPosts(page){
+        axios.get('http://localhost:3001/post/'+this.props.category)
         .then((res) => {
-            var posts = this.state.posts
+            var posts = page === 0 ? [] : this.state.posts
             res.data.data.map(post => {
                 posts.push({
                     title: post.title,
                     url: 'http://localhost:3001/storage/post/'+post.path,
                     category: post.category.name,
                     url_category: 'http://localhost:3001/storage/category/'+post.category.path,
+                    points: post.positives.length - post.negatives.length,
+                    comments: post.comments.length,
                     time: this._formatDate(post.createdAt)
                 })
             })
@@ -53,7 +62,6 @@ export default class Feed extends React.Component {
             return minutes+" minuto"+(minutes > 1 ? "s" : "")
         else
             return seconds+" segundo"+(seconds > 1 ? "s" : "")
-    
     }
 
     render(){
@@ -66,7 +74,15 @@ export default class Feed extends React.Component {
                     {this.state.posts.map((post, key) => 
                         <div className="row" key={key}>
                             <div className="offset-lg-2 col-lg-8">
-                                <Post time={post.time} url_category={post.url_category} category={post.category} title={post.title} url={post.url}/>
+                                <Post 
+                                    time={post.time} 
+                                    url_category={post.url_category} 
+                                    points={post.points}
+                                    comments={post.comments} 
+                                    category={post.category} 
+                                    title={post.title} 
+                                    url={post.url}
+                                />
                             </div>
                         </div>
                     )}
