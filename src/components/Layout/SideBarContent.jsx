@@ -1,6 +1,6 @@
 import React from 'react'
 import axios from 'axios'
-import { Link, Redirect } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 export default class SideBarContent extends React.Component{
 
@@ -33,10 +33,7 @@ export default class SideBarContent extends React.Component{
         e.preventDefault()
         axios.get('http://localhost:3001/post/Aleatório')
         .then((res) => {
-            var post_id = res.data
-            this.setState({
-                aleatorio: (<Redirect to={'/post/'+post_id} />)
-            })
+            window.location.replace("/post/"+res.data);
         })
     }
 
@@ -56,9 +53,6 @@ export default class SideBarContent extends React.Component{
     }
 
     render(){
-        if(this.state.aleatorio !== null){
-            return this.state.aleatorio
-        }
 
         return (
             <div className="sidebar-content">

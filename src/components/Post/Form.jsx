@@ -11,38 +11,62 @@ import SweetAlert from 'sweetalert-react';
 import 'sweetalert/dist/sweetalert.css';
 import FormHelperText from '@material-ui/core/FormHelperText';
 import {Validate} from '../../utils/validation'
+import { responsiveFontSizes } from '@material-ui/core';
 
 export default class Form extends React.Component {
     constructor(props){
         super(props)
         this.state = {
-            id: null,
             title: "",
             imageName: "Nenhum arquivo selecionado",
             image: null,
             category_id: "",
             categories: [],
             show: false,
-            validations:{
-                'title': {
-                    'required'  : true,
-                    'minLength'       : 3,
-                    'maxLength'       : 50,
-                },
-                'image': {
-                    'required': true,
-                    'ext': ['png', 'jpg', 'jpeg', 'webm', 'mp4', 'gif'],
-                },
-                'category_id': {
-                    'required': true,
-                },
-            },
-            validationErrors: {
+            validations:{},
+            validationErrors: {}
+        }
 
+    }
+
+    componentDidMount(){
+        if(this.props.id !== null)
+            this._getPost()
+        this._getCategories()
+        this._setValidations()
+    }
+
+    _setValidations(){
+        var validations = {}
+
+        validations['title'] = {
+            'required'  : true,
+            'minLength'       : 3,
+            'maxLength'       : 50,
+        }
+
+        validations['category_id'] = {
+            'required': true,
+        }
+
+        if(!this.props.id){
+            validations['image'] = {
+                'required': true,
+                'ext': ['png', 'jpg', 'jpeg', 'webm', 'mp4', 'gif'],
             }
         }
 
-        this._getCategories()
+        this.setState({validations})
+    }
+
+    _getPost(){
+        axios.get('http://localhost:3001/post/find/'+this.props.id)
+        .then((res) => {
+            this.setState({
+                title: res.data.post.title,
+                category_id: res.data.post.category_id,
+            })
+        })
     }
 
     handleChange(event){
@@ -99,19 +123,32 @@ export default class Form extends React.Component {
 
     _sendForm = () => {
         if(this._formValidate()){
-            var data = new FormData()
-            data.append('path', this.state.image)
-            data.append('title', this.state.title)
-            data.append('category_id', this.state.category_id)
-            axios.post(
-                'http://localhost:3001/post/', 
-                data, 
-                {
-                    headers: {
-                        'Content-Type': 'multipart/form-data'
-                    }
-                } 
-            ).then((res) => {
+            
+            if(this.props.id != null){
+                var request = axios.put(
+                    'http://localhost:3001/post/'+this.props.id, 
+                    {
+                        'title': this.state.title,
+                        'category_id': this.state.category_id
+                    },
+                )
+            }else{
+                var data = new FormData()
+
+                if(!this.props.id)
+                    data.append('path', this.state.image)
+
+                data.set('title', this.state.title)
+                data.set('category_id', this.state.category_id)
+                
+                var request = axios.post(
+                    'http://localhost:3001/post/', 
+                    data,
+                    { headers: {'Content-Type': 'multipart/form-data' }}
+                )
+            }
+
+            request.then((res) => {
                 this.setState({
                     show: true,
                     title: "",
@@ -130,11 +167,11 @@ export default class Form extends React.Component {
                     <SweetAlert
                         show={this.state.show}
                         title="Sucesso"
-                        text="Meme cadastrado com sucesso!"
-                        onConfirm={() => this.setState({ show: false })}
+                        text={"Publicação "+(this.props.id ? "atualizada" : "cadastrada")+" com sucesso!"}
+                        onConfirm={() => {window.location.replace("/")}}
                     />
                     <div className="mt-5">
-                        <span className="form-post-title">{this.state.id == null ? "Novo meme" : "Editar meme"}</span>
+                        <span className="form-post-title">{this.props.id == null ? "Nova publicação" : "Editar publicação"}</span>
                     </div>
                     <Grid className="mt-5" container alignItems="flex-end">
                         <Grid item  xs={2} md={1}>
@@ -153,7 +190,7 @@ export default class Form extends React.Component {
                             />
                         </Grid>
                     </Grid>
-                    {this.state.id == null && 
+                    {this.props.id == null && 
                         <Grid className="mt-5" container alignItems="flex-end">
                             <Grid item xs={2} md={1}>
                                 <i className="fas fa-images fa-lg"></i>
@@ -217,7 +254,7 @@ export default class Form extends React.Component {
                         </Grid>
                     </Grid>
                     <button onClick={() => {this._sendForm()}} className="btn btn-lg button-navbar mt-5 mb-5">
-                        {this.state.id == null ? "Salvar" : "Atualizar"}
+                        {this.props.id == null ? "Salvar" : "Atualizar"}
                     </button>
                 </div>
             </div>

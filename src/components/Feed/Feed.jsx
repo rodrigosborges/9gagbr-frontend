@@ -16,26 +16,42 @@ export default class Feed extends React.Component {
         this._getPosts(0)
     }
 
-    componentDidUpdate(){
-        this._getPosts(0)
-    }
+    componentDidUpdate(prevProps) {
+        if (this.props.category !== prevProps.category) {
+            this._getPosts(0)
+        }
+      }
 
     _getPosts(page){
-        axios.get('http://localhost:3001/post/'+this.props.category)
+        const params = new URLSearchParams(this.props.query)
+
+        var url = 'http://localhost:3001/post/'
+
+        url += this.props.category ? this.props.category : ( params.get('search') ? "search/" : "" )
+
+        var request = this.props.category ? axios.get(url) : ( params.get('search') ? axios.post(url, {search: params.get('search')}) : axios.get(url))
+
+        console.log(request)
+
+        request
         .then((res) => {
             var posts = page === 0 ? [] : this.state.posts
-            res.data.data.map(post => {
-                posts.push({
-                    title: post.title,
-                    url: 'http://localhost:3001/storage/post/'+post.path,
-                    category: post.category.name,
-                    url_category: 'http://localhost:3001/storage/category/'+post.category.path,
-                    points: post.positives.length - post.negatives.length,
-                    comments: post.comments.length,
-                    time: this._formatDate(post.createdAt)
+            if(res.data.data){
+                res.data.data.map(post => {
+                    posts.push({
+                        title: post.title,
+                        url: 'http://localhost:3001/storage/post/'+post.path,
+                        category: post.category.name,
+                        url_category: 'http://localhost:3001/storage/category/'+post.category.path,
+                        comments: post.comments.length,
+                        time: this._formatDate(post.createdAt),
+                        id: post.id,
+                        positives: post.positives,
+                        negatives: post.negatives
+                    })
                 })
-            })
-            this.setState({posts})
+                this.setState({posts})
+            }
         })
     }
 
@@ -77,11 +93,15 @@ export default class Feed extends React.Component {
                                 <Post 
                                     time={post.time} 
                                     url_category={post.url_category} 
-                                    points={post.points}
+                                    positives={post.positives}
+                                    negatives={post.negatives}
                                     comments={post.comments} 
                                     category={post.category} 
                                     title={post.title} 
                                     url={post.url}
+                                    id={post.id}
+                                    link={true}
+                                    user_id={1}
                                 />
                             </div>
                         </div>

@@ -9,7 +9,8 @@ export default class FeedScreen extends React.Component{
         <Layout 
           content={
             <Feed 
-              category={this.props.match.params.category ? this.props.match.params.category : this.props.match.params.section ? this.props.match.params.section : ""}
+              category={this.props.match.params.category ? this.props.match.params.category : ""}
+              query={this.props.location.search}
             />
           } 
         />

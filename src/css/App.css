@@ -43,6 +43,12 @@
   border-color: #292a39 !important;
 }
 
+.button-navbar.active{
+  background-color: #A69CAC !important;
+  color: #292a39 !important;
+  border-color: #292a39 !important;
+}
+
 .img-post-icon{
   width: 30px;
   height: 30px;
