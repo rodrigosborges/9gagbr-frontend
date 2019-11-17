@@ -34,6 +34,9 @@ export default class Form extends React.Component {
             this._getPost()
         this._getCategories()
         this._setValidations()
+        this.setState({
+            user_id: localStorage.getItem('user_id')
+        })
     }
 
     _setValidations(){
@@ -129,7 +132,7 @@ export default class Form extends React.Component {
                     'http://localhost:3001/post/'+this.props.id, 
                     {
                         'title': this.state.title,
-                        'category_id': this.state.category_id
+                        'category_id': this.state.category_id,
                     },
                 )
             }else{
@@ -140,6 +143,7 @@ export default class Form extends React.Component {
 
                 data.set('title', this.state.title)
                 data.set('category_id', this.state.category_id)
+                data.set('user_id', this.state.user_id)
                 
                 var request = axios.post(
                     'http://localhost:3001/post/', 

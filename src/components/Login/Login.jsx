@@ -6,6 +6,8 @@ import { Link } from 'react-router-dom'
 import TextField from '@material-ui/core/TextField'
 import Grid from '@material-ui/core/Grid'
 import axios from 'axios'
+import SweetAlert from 'sweetalert-react';
+import 'sweetalert/dist/sweetalert.css';
 
 export default class Feed extends React.Component {
     constructor(props){
@@ -23,17 +25,65 @@ export default class Feed extends React.Component {
                 email: '',
                 password: '',
             },
+            show: false,
+            modalBody: '',
+            modalTitle: '',
+            modalClose: () => {},
+            validations:{},
+            validationErrors: {}
         }
-    
+
+        this._login = this._login.bind(this)
+
     }
 
     _login(){
+        axios.post('http://localhost:3001/user/login', this.state.login)
+        .then((res) => {
+            if(res.data.message == 'E-mail ou senha incorretos'){
+                this.setState({
+                    show: true,
+                    modalTitle: 'Erro',
+                    modalBody: res.data.message,
+                    modalClose: () => {this.setState({show:false})}
+                })
+            }else{
+                localStorage.setItem('token', res.data.token)
+                localStorage.setItem('user_id', res.data.user_id)
+                window.location.replace("/")
+            }
+        })
     }
 
     _register(){
         axios.post('http://localhost:3001/user/', this.state.register)
         .then((res) => {
-            console.log(res.data.message)
+            var success = res.data.message == 'Usuario cadastrado com sucesso'
+
+            var funcao = () => {
+                if(success)
+                    document.getElementById("entrar").click()
+                
+                this.setState({
+                    login:{
+                        ...this.state.login,
+                        email: success ? this.state.register.email : this.state.login.email
+                    },
+                    register: {
+                        name: '',
+                        email: '',
+                        password: '',
+                    },
+                    show: false,
+                })
+            }
+
+            this.setState({
+                show: true,
+                modalTitle: success ? 'Sucesso' : 'Erro',
+                modalBody: res.data.message,
+                modalClose: funcao
+            })
         })
     }
 
@@ -82,6 +132,12 @@ export default class Feed extends React.Component {
                 <div id='stars3'></div>
                 <div className="row h-100">
                     <div className="login-content col-xl-8 offset-xl-2 col-lg-10 offset-lg-1 my-auto">
+                        <SweetAlert
+                            show={this.state.show}
+                            title={this.state.modalTitle}
+                            text={this.state.modalBody}
+                            onConfirm={this.state.modalClose}
+                        />
                         <div className={"login-background"}>
                         </div>
                         <div className={(this.state.toRegister === false ? "form-login-info-right" : "form-login-info-left")+" text-center"}>
@@ -112,7 +168,7 @@ export default class Feed extends React.Component {
                                             <span className="form-login-info-title">Já possui conta?</span>
                                         </div>
                                         <div  className={window.innerWidth < 800 ? "mt-4" : ""}>
-                                            <button onClick={() => {this._changeForm(false)}} className="btn btn-lg button-navbar">
+                                            <button onClick={() => {this._changeForm(false)}} id="entrar" className="btn btn-lg button-navbar">
                                                 Entrar
                                             </button>
                                         </div>
@@ -132,9 +188,8 @@ export default class Feed extends React.Component {
                                                 </Grid>
                                                 <Grid item xs={11}>
                                                     <TextField 
-                                                        defaultValue={this.state.login.email} 
+                                                        value={this.state.login.email} 
                                                         fullWidth 
-                                                        id="input-with-icon-grid" 
                                                         label="E-mail" 
                                                         onChange={(e) => {this.setState({
                                                             login: {
@@ -153,10 +208,9 @@ export default class Feed extends React.Component {
                                                 </Grid>
                                                 <Grid item xs={11}>
                                                     <TextField 
-                                                        defaultValue={this.state.login.password} 
+                                                        value={this.state.login.password} 
                                                         type="password" 
                                                         fullWidth 
-                                                        id="input-with-icon-grid" 
                                                         label="Password" 
                                                         onChange={(e) => {this.setState({
                                                             login: {
@@ -168,7 +222,7 @@ export default class Feed extends React.Component {
                                                 </Grid>
                                             </Grid>
                                         </div>
-                                        <button onClick={() => {}} className="btn btn-lg button-navbar mt-5">
+                                        <button onClick={this._login} className="btn btn-lg button-navbar mt-5">
                                             Entrar
                                         </button>
                                     </div>
@@ -185,9 +239,8 @@ export default class Feed extends React.Component {
                                                 </Grid>
                                                 <Grid item xs={11}>
                                                     <TextField 
-                                                        defaultValue={this.state.register.name} 
+                                                        value={this.state.register.name} 
                                                         fullWidth 
-                                                        id="input-with-icon-grid" 
                                                         label="Nome" 
                                                         onChange={(e) => {this.setState({
                                                             register: {
@@ -206,9 +259,8 @@ export default class Feed extends React.Component {
                                                 </Grid>
                                                 <Grid item xs={11}>
                                                     <TextField 
-                                                        defaultValue={this.state.register.email} 
+                                                        value={this.state.register.email} 
                                                         fullWidth 
-                                                        id="input-with-icon-grid" 
                                                         label="E-mail"
                                                         onChange={(e) => {this.setState({
                                                             register: {
@@ -227,7 +279,7 @@ export default class Feed extends React.Component {
                                                 </Grid>
                                                 <Grid item xs={11}>
                                                     <TextField 
-                                                        defaultValue={this.state.register.password} 
+                                                        value={this.state.register.password} 
                                                         onChange={(e) => {this.setState({
                                                             register: {
                                                                 ...this.state.register,
@@ -236,7 +288,6 @@ export default class Feed extends React.Component {
                                                         })}} 
                                                         type="password" 
                                                         fullWidth 
-                                                        id="input-with-icon-grid" 
                                                         label="Password" 
                                                     />
                                                 </Grid>

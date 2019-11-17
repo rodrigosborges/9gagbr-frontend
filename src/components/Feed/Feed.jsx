@@ -14,6 +14,9 @@ export default class Feed extends React.Component {
     
     componentDidMount(){
         this._getPosts(0)
+        this.setState({
+            user_id: localStorage.getItem('user_id')
+        })
     }
 
     componentDidUpdate(prevProps) {
@@ -30,8 +33,6 @@ export default class Feed extends React.Component {
         url += this.props.category ? this.props.category : ( params.get('search') ? "search/" : "" )
 
         var request = this.props.category ? axios.get(url) : ( params.get('search') ? axios.post(url, {search: params.get('search')}) : axios.get(url))
-
-        console.log(request)
 
         request
         .then((res) => {
@@ -101,7 +102,7 @@ export default class Feed extends React.Component {
                                     url={post.url}
                                     id={post.id}
                                     link={true}
-                                    user_id={1}
+                                    user_id={this.state.user_id}
                                 />
                             </div>
                         </div>

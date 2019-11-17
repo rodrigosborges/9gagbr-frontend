@@ -6,8 +6,20 @@ export default class NavBar extends React.Component {
     constructor(props){
         super(props)
         this.state = {
-            logado: true
+            user_id: null
         }
+    }
+
+    componentDidMount(){
+        this.setState({
+            user_id: localStorage.getItem('user_id')
+        })
+    }
+
+    _logout(){
+        localStorage.removeItem('user_id')
+        localStorage.removeItem('token')
+        window.location.replace('/')
     }
 
     render(){
@@ -27,7 +39,7 @@ export default class NavBar extends React.Component {
                     <ul className="navbar-nav ml-3 mr-auto">
                     </ul>
 
-                    {this.state.logado && (
+                    {this.state.user_id && (
                         <ul className="navbar-nav mx-2">
                             <li className="nav-item">
                                 <Link to="/post/create" className="btn button-navbar my-2 my-sm-0 mr-3">
@@ -37,12 +49,22 @@ export default class NavBar extends React.Component {
                         </ul>
                     )}
 
-                    {this.state.logado && (
+                    {!this.state.user_id && (
                         <ul className="navbar-nav mx-2">
                             <li className="nav-item">
                                 <Link to="/login" className="btn button-navbar my-2 my-sm-0 mr-3">
                                     Entrar
                                 </Link>
+                            </li>
+                        </ul>
+                    )}
+
+                    {this.state.user_id && (
+                        <ul className="navbar-nav mx-2">
+                            <li className="nav-item">
+                                <button onClick={this._logout} className="btn button-navbar my-2 my-sm-0 mr-3">
+                                    Sair
+                                </button>
                             </li>
                         </ul>
                     )}

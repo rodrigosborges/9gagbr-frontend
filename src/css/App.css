@@ -37,12 +37,6 @@
   border-color: #292a39 !important;
 }
 
-.button-navbar:focus {
-  background-color: #A69CAC !important; /* Green */
-  color: #292a39 !important;
-  border-color: #292a39 !important;
-}
-
 .button-navbar.active{
   background-color: #A69CAC !important;
   color: #292a39 !important;

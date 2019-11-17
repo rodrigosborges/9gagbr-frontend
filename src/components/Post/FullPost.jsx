@@ -22,6 +22,9 @@ export default class Feed extends React.Component {
     componentDidMount(){
         this._getPost()
         this._setValidations()
+        this.setState({
+            user_id: localStorage.getItem('user_id')
+        })
     }
 
     _setValidations(){
@@ -46,11 +49,15 @@ export default class Feed extends React.Component {
     }
 
     sendComment(){
+        if(!this.state.user_id){
+            window.location.replace('/login')
+        }
+
         if(this._inputValidate('comment')){
             axios.post(
                 'http://localhost:3001/comment/', {
                     'message': this.state.comment,
-                    'user_id': 1,
+                    'user_id': this.state.user_id,
                     'post_id': this.state.post.id
                 },
             ).then((res) => {
@@ -93,6 +100,9 @@ export default class Feed extends React.Component {
         axios.get('http://localhost:3001/post/find/'+this.props.post_id)
         .then((res) => {
             var post = res.data
+
+            if(!post)
+                window.location.replace('/')
                         
             var comments = post.comments.map(comment => {
                 return {
@@ -179,7 +189,7 @@ export default class Feed extends React.Component {
                                     url={this.state.post.url}
                                     id={this.state.post.id}
                                     link={false}
-                                    user_id={1}
+                                    user_id={this.state.user_id}
                                 />
 
                                 <div className="postContainer">
@@ -190,12 +200,12 @@ export default class Feed extends React.Component {
                                                 helperText={this.state.validationErrors['comment'] && this.state.validationErrors['comment']}
                                                 value={this.state.comment} 
                                                 fullWidth 
-                                                id="input-with-icon-grid" 
+                                                id="comment" 
                                                 label="Comente algo aqui..." 
                                                 name="comment"
                                                 variant="outlined"
                                                 multiline
-                                                onChange={this.handleChange.bind(this)} 
+                                                onChange={this.handleChange.bind(this)}
                                             />
                                         </div>
                                         <div className="col-md-2 col-sm-3 pt-3">

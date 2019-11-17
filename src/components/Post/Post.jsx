@@ -9,9 +9,25 @@ export default class Post extends React.Component {
             liked: false,
             unliked: false
         }
+
+        this._share = this._share.bind(this)
+        this._focusComment = this._focusComment.bind(this)
     }
 
     componentDidMount(){
+        if(window.location.search.includes('comment'))
+            document.getElementById("comment").focus()
+            
+        this._updateComponent()
+    }
+
+    componentDidUpdate(previousProps, previousState){
+        if (previousProps.id !== this.props.id) {
+            this._updateComponent()
+        }
+    }
+
+    _updateComponent(){
         var liked = false
         var unliked = false
 
@@ -28,7 +44,8 @@ export default class Post extends React.Component {
         this.setState({
             liked,
             unliked,
-            points: this.props.positives.length - this.props.negatives.length
+            points: this.props.positives.length - this.props.negatives.length,
+            user_id: localStorage.getItem('user_id')
         })
     }
 
@@ -48,57 +65,90 @@ export default class Post extends React.Component {
         }
     }
 
-    _checkLogin(){
-        if(!this.props.user_id)
-            window.location.replace("/login")
-    }
-
     _like(liked){
 
-        this._checkLogin()
+        if(this.props.user_id){
 
-        var data = {
-            user_id: this.props.user_id,
-            positive: true,
-            post_id: this.props.id
-        }
+            var data = {
+                user_id: this.props.user_id,
+                positive: true,
+                post_id: this.props.id
+            }
 
-        if(this.state.liked == true){
-            data.remove = true
-            this.setState({
-                liked: false,
-            })
+            if(this.state.liked == true){
+                data.remove = true
+                this.setState({
+                    liked: false,
+                    unliked: false,
+                    points: this.state.points-1
+                })
+            }else{
+                this.setState({
+                    liked: true,
+                    unliked: false,
+                    points: this.state.points+(this.state.unliked == false ? 1 : 2)
+                })
+            }
+
+            axios.post('http://localhost:3001/reaction/', data)
         }else{
-            this.setState({
-                liked: true,
-            })
+            window.location.replace("/login")
         }
-
-        axios.post('http://localhost:3001/reaction/', data)
     }
 
     _dislike(unliked){
-
-        this._checkLogin()
         
-        var data = {
-            user_id: this.props.user_id,
-            positive: false,
-            post_id: this.props.id
-        }
+        if(this.props.user_id){
+            var data = {
+                user_id: this.props.user_id,
+                positive: false,
+                post_id: this.props.id
+            }
 
-        if(this.state.unliked == true){
-            data.remove = true
-            this.setState({
-                unliked: false,
-            })
+            if(this.state.unliked == true){
+                data.remove = true
+                this.setState({
+                    unliked: false,
+                    liked: false,
+                    points: this.state.points+1
+                })
+            }else{
+                this.setState({
+                    unliked: true,
+                    liked: false,
+                    points: this.state.points-(this.state.liked == false ? 1 : 2)
+                })
+            }
+
+            axios.post('http://localhost:3001/reaction/', data)
         }else{
-            this.setState({
-                unliked: true,
-            })
+            window.location.replace("/login")
         }
+    }
 
-        axios.post('http://localhost:3001/reaction/', data)
+    _share(){
+        var link = window.location.host+"/post/"+this.props.id
+        this.copyToClipboard(link)
+    }
+
+    copyToClipboard(text) {
+        var dummy = document.createElement("textarea");
+        // to avoid breaking orgain page when copying more words
+        // cant copy when adding below this code
+        // dummy.style.display = 'none'
+        document.body.appendChild(dummy);
+        //Be careful if you use texarea. setAttribute('value', value), which works with "input" does not work with "textarea". – Eduard
+        dummy.value = text;
+        dummy.select();
+        document.execCommand("copy");
+        document.body.removeChild(dummy);
+    }
+
+    _focusComment(){
+        if(window.location.pathname.includes("/post/"))
+            document.getElementById("comment").focus()
+        else
+            window.location.replace("/post/"+this.props.id+"?comment")
     }
 
     render(){
@@ -125,10 +175,10 @@ export default class Post extends React.Component {
                         <button className={"btn button-navbar my-2 my-sm-0 mr-3 " + (this.state.unliked == true ? "active" : "")} onClick={() => {this._dislike()}}>
                             <i className={"fa fa-arrow-down"} />
                         </button>
-                        <button className="btn button-navbar my-2 my-sm-0 mr-3" onClick={() => {}}>
+                        <button className="btn button-navbar my-2 my-sm-0 mr-3" onClick={this._focusComment}>
                             <i className="fa fa-comment" />
                         </button>
-                        <button className="btn button-navbar my-2 my-sm-0 mr-3" onClick={() => {}}>
+                        <button type="button" className="btn button-navbar my-2 my-sm-0 mr-3" data-toggle="tooltip" data-placement="top" title="Clique para copiar o link" onClick={this._share}>
                             <i className="fa fa-share-alt" />
                         </button>
                     </div>
