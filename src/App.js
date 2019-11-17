@@ -4,6 +4,7 @@ import Feed from './screens/Feed'
 import Login from './screens/Login'
 import FormPost from './screens/FormPost'
 import FullPost from './screens/FullPost'
+import NotFound from './screens/NotFound'
 import './css/App.css'
 import axios from 'axios'
 
@@ -27,14 +28,15 @@ export default class App extends React.Component {
   render(){
     return (
       <Router>
-        <Route path="/" exact component={Feed} />
-        <Route path="/login" exact component={Login} />
         <Switch>
+          <Route path="/" exact component={Feed} />
+          <Route path="/login" exact component={Login} />
           <Route path="/post/create" exact component={FormPost} />
           <Route path="/post/:id" exact component={FullPost} />
+          <Route path="/post/:id/edit" exact component={FormPost} />
+          <Route path="/category/:category" exact component={Feed} />
+          <Route component={NotFound} />
         </Switch>
-        <Route path="/post/:id/edit" exact component={FormPost} />
-        <Route path="/category/:category" exact component={Feed} />
       </Router>
     );
   }

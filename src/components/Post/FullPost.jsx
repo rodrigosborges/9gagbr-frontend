@@ -102,7 +102,7 @@ export default class Feed extends React.Component {
             var post = res.data
 
             if(!post)
-                window.location.replace('/')
+                window.location.replace('/404')
                         
             var comments = post.comments.map(comment => {
                 return {
