@@ -1,5 +1,6 @@
 import React from 'react';
-import { BrowserRouter as Router, Route, Link, Switch } from "react-router-dom";
+import { BrowserRouter as Router, Route, Link, Switch, Redirect } from "react-router-dom";
+import Layout from './components/Layout/Layout'
 import Feed from './screens/Feed'
 import Login from './screens/Login'
 import FormPost from './screens/FormPost'
@@ -7,6 +8,8 @@ import FullPost from './screens/FullPost'
 import NotFound from './screens/NotFound'
 import './css/App.css'
 import axios from 'axios'
+import './css/Stars.css'
+import './css/CreatePost.css'
 
 export default class App extends React.Component {
 
@@ -28,15 +31,36 @@ export default class App extends React.Component {
   render(){
     return (
       <Router>
-        <Switch>
-          <Route path="/" exact component={Feed} />
+        {window.location.pathname != '/login' && (
+          <Layout>
+            <div id="div-content" className="div-background div-background-ext">
+              <div id='stars'></div>
+              <div id='stars2'></div>
+              <div id='stars3'></div>
+              <div className="container my-3">
+                <div className="col-md-10 offset-md-1">
+                  <Switch>
+                    <Route path="/" exact component={Feed} />
+
+                    <Route path="/post/create" exact render={(props) => (
+                      localStorage.getItem('token') 
+                      && (<FormPost {...props}/>)
+                      || (<NotFound />)
+                    )} />
+
+                    <Route path="/post/:id" exact component={FullPost}/>
+
+                    <Route path="/post/:id/edit" exact component={FormPost} />
+                    <Route path="/category/:category" exact component={Feed} />
+                    <Route component={NotFound} />
+                  </Switch>
+                </div>
+              </div>
+            </div>
+          </Layout>
+        ) || (
           <Route path="/login" exact component={Login} />
-          <Route path="/post/create" exact component={FormPost} />
-          <Route path="/post/:id" exact component={FullPost} />
-          <Route path="/post/:id/edit" exact component={FormPost} />
-          <Route path="/category/:category" exact component={Feed} />
-          <Route component={NotFound} />
-        </Switch>
+        )}
       </Router>
     );
   }

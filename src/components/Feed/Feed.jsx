@@ -1,7 +1,5 @@
 import React from 'react';
 import Post from '../Post/Post';
-import '../../css/Stars.css'
-import '../../css/Post.css'
 import axios from 'axios'
 
 export default class Feed extends React.Component {
@@ -83,31 +81,26 @@ export default class Feed extends React.Component {
 
     render(){
         return (
-            <div id="div-content" className="div-background">
-                <div id='stars'></div>
-                <div id='stars2'></div>
-                <div id='stars3'></div>
-                <div className="container h-100">
-                    {this.state.posts.map((post, key) => 
-                        <div className="row" key={key}>
-                            <div className="offset-lg-2 col-lg-8">
-                                <Post 
-                                    time={post.time} 
-                                    url_category={post.url_category} 
-                                    positives={post.positives}
-                                    negatives={post.negatives}
-                                    comments={post.comments} 
-                                    category={post.category} 
-                                    title={post.title} 
-                                    url={post.url}
-                                    id={post.id}
-                                    link={true}
-                                    user_id={this.state.user_id}
-                                />
-                            </div>
+            <div>
+                {this.state.posts.map((post, key) => 
+                    <div className="row" key={key}>
+                        <div className="offset-lg-2 col-lg-8">
+                            <Post 
+                                time={post.time} 
+                                url_category={post.url_category} 
+                                positives={post.positives}
+                                negatives={post.negatives}
+                                comments={post.comments} 
+                                category={post.category} 
+                                title={post.title} 
+                                url={post.url}
+                                id={post.id}
+                                link={true}
+                                user_id={this.state.user_id}
+                            />
                         </div>
-                    )}
-                </div>
+                    </div>
+                )}
             </div>
         )
     }

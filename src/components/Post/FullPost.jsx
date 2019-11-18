@@ -27,6 +27,12 @@ export default class Feed extends React.Component {
         })
     }
 
+    componentDidUpdate(previousProps){
+        if (previousProps.post_id !== this.props.post_id) {
+            this._getPost()
+        }
+    }
+
     _setValidations(){
         var validations = {}
 
@@ -170,10 +176,7 @@ export default class Feed extends React.Component {
 
     render(){
         return (
-            <div id="div-content" className="div-background">
-                <div id='stars'></div>
-                <div id='stars2'></div>
-                <div id='stars3'></div>
+            <div>
                 {this.state.post.id && 
                     <div className="container h-100">
                         <div className="row" key={1}>

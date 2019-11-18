@@ -49,7 +49,7 @@ export default class Layout extends React.Component {
                     </button>
                 </div>
                 <NavBar />
-                {this.props.content}
+                {this.props.children}
             </Sidebar>
 
             </div>
