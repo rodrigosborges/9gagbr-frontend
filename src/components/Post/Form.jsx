@@ -12,6 +12,8 @@ import 'sweetalert/dist/sweetalert.css';
 import FormHelperText from '@material-ui/core/FormHelperText';
 import {Validate} from '../../utils/validation'
 import { responsiveFontSizes } from '@material-ui/core';
+import { Redirect } from "react-router-dom";
+
 
 export default class Form extends React.Component {
     constructor(props){
@@ -24,18 +26,20 @@ export default class Form extends React.Component {
             categories: [],
             show: false,
             validations:{},
-            validationErrors: {}
+            validationErrors: {},
+            redirect: null,
         }
 
     }
 
     componentDidMount(){
-        if(this.props.id !== null)
-            this._getPost()
         this._getCategories()
         this._setValidations()
         this.setState({
             user_id: localStorage.getItem('user_id')
+        }, () => {
+            if(this.props.id !== null)
+                this._getPost()
         })
     }
 
@@ -65,10 +69,16 @@ export default class Form extends React.Component {
     _getPost(){
         axios.get('http://localhost:3001/post/find/'+this.props.id)
         .then((res) => {
-            this.setState({
-                title: res.data.post.title,
-                category_id: res.data.post.category_id,
-            })
+            if(res.data.id && this.state.user_id == res.data.user_id){
+                this.setState({
+                    title: res.data.title,
+                    category_id: res.data.category_id,
+                })
+            }else{
+                this.setState({
+                    redirect: (<Redirect to='/404' />)
+                })
+            }
         })
     }
 
@@ -155,10 +165,9 @@ export default class Form extends React.Component {
             request.then((res) => {
                 this.setState({
                     show: true,
-                    title: "",
-                    imageName: "Nenhum arquivo selecionado",
-                    image: null,
-                    category_id: "",
+                    modalTitle: res.data.message == 'Erro no servidor' ? 'Erro' : 'Sucesso',
+                    modalText: res.data.message,
+                    modalResponse: res.data.message == 'Erro no servidor' ? () => {this.setState({show: false})} : () => this.setState({redirect: <Redirect to='/' />, show:false})
                 })
             })
         }
@@ -167,12 +176,13 @@ export default class Form extends React.Component {
     render(){
         return (
             <div className="form-post">
+                {this.state.redirect}
                 <div className="col-lg-10 offset-lg-1 my-auto">
                     <SweetAlert
                         show={this.state.show}
-                        title="Sucesso"
-                        text={"Publicação "+(this.props.id ? "atualizada" : "cadastrada")+" com sucesso!"}
-                        onConfirm={() => {window.location.replace("/")}}
+                        title={this.state.modalTitle}
+                        text={this.state.modalText}
+                        onConfirm={this.state.modalResponse}
                     />
                     <div className="mt-5">
                         <span className="form-post-title">{this.props.id == null ? "Nova publicação" : "Editar publicação"}</span>

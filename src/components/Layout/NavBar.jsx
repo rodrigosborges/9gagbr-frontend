@@ -49,6 +49,16 @@ export default class NavBar extends React.Component {
                         </ul>
                     )}
 
+                    {this.state.user_id && (
+                        <ul className="navbar-nav mx-2">
+                            <li className="nav-item">
+                                <Link to="/user/posts" className="btn button-navbar my-2 my-sm-0 mr-3">
+                                    Minhas publicações
+                                </Link>
+                            </li>
+                        </ul>
+                    )}
+
                     {!this.state.user_id && (
                         <ul className="navbar-nav mx-2">
                             <li className="nav-item">

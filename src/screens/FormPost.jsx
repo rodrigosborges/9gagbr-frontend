@@ -5,9 +5,9 @@ export default class CreatePostScreen extends React.Component{
   
   render (){    
     return (
-        <Form 
-          id={this.props.match.params.id ? this.props.match.params.id : null}
-        />
+      <Form 
+        id={this.props.match.params.id ? this.props.match.params.id : null}
+      />
     )
   }
 }

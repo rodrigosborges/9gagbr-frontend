@@ -6,10 +6,17 @@ import Login from './screens/Login'
 import FormPost from './screens/FormPost'
 import FullPost from './screens/FullPost'
 import NotFound from './screens/NotFound'
+import UserPosts from './screens/UserPosts'
 import './css/App.css'
 import axios from 'axios'
-import './css/Stars.css'
-import './css/CreatePost.css'
+
+function RouteWithLayout({layout, component, ...rest}){
+  return (
+    <Route {...rest} render={(props) =>
+      React.createElement( layout, props, React.createElement(component, props))
+    }/>
+  );
+}
 
 export default class App extends React.Component {
 
@@ -31,36 +38,20 @@ export default class App extends React.Component {
   render(){
     return (
       <Router>
-        {window.location.pathname != '/login' && (
-          <Layout>
-            <div id="div-content" className="div-background div-background-ext">
-              <div id='stars'></div>
-              <div id='stars2'></div>
-              <div id='stars3'></div>
-              <div className="container my-3">
-                <div className="col-md-10 offset-md-1">
-                  <Switch>
-                    <Route path="/" exact component={Feed} />
-
-                    <Route path="/post/create" exact render={(props) => (
-                      localStorage.getItem('token') 
-                      && (<FormPost {...props}/>)
-                      || (<NotFound />)
-                    )} />
-
-                    <Route path="/post/:id" exact component={FullPost}/>
-
-                    <Route path="/post/:id/edit" exact component={FormPost} />
-                    <Route path="/category/:category" exact component={Feed} />
-                    <Route component={NotFound} />
-                  </Switch>
-                </div>
-              </div>
-            </div>
-          </Layout>
-        ) || (
+        <Switch>
           <Route path="/login" exact component={Login} />
-        )}
+          <RouteWithLayout layout={Layout} path='/404' exact component={NotFound} />
+          <RouteWithLayout layout={Layout} path="/" exact component={Feed} />
+
+          <RouteWithLayout layout={Layout} path="/post/create" exact component={FormPost}/>
+
+          <RouteWithLayout layout={Layout} path="/post/:id" exact component={FullPost}/>
+
+          <RouteWithLayout layout={Layout} path="/post/:id/edit" exact component={FormPost} />
+          <RouteWithLayout layout={Layout} path="/category/:category" exact component={Feed} />
+          <RouteWithLayout layout={Layout} path="/user/posts" exact component={UserPosts} />
+          <Redirect to='/404' />
+        </Switch>
       </Router>
     );
   }

@@ -1,5 +1,4 @@
 import React from 'react';
-import Layout from '../components/Layout/Layout'
 import FullPost from '../components/Post/FullPost'
 
 export default class FullPostScreen extends React.Component{

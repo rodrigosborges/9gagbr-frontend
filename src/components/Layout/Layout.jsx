@@ -2,6 +2,8 @@ import React from "react"
 import Sidebar from "react-sidebar";
 import NavBar from './NavBar'
 import SideBarContent from './SideBarContent'
+import '../../css/Stars.css'
+import '../../css/CreatePost.css'
 
 const mql = window.matchMedia(`(min-width: 800px)`);
 
@@ -49,7 +51,16 @@ export default class Layout extends React.Component {
                     </button>
                 </div>
                 <NavBar />
-                {this.props.children}
+                <div id="div-content" className="div-background div-background-ext">
+                    <div id='stars'></div>
+                    <div id='stars2'></div>
+                    <div id='stars3'></div>
+                    <div className="container my-3">
+                        <div className="col-md-10 offset-md-1">
+                            {this.props.children}
+                        </div>
+                    </div>
+                </div>
             </Sidebar>
 
             </div>

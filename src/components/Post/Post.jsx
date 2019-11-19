@@ -1,17 +1,20 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios'
+import SweetAlert from 'sweetalert-react';
 
 export default class Post extends React.Component {
     constructor(props){
         super(props)
         this.state = {
             liked: false,
-            unliked: false
+            unliked: false,
+            show: false,
         }
 
         this._share = this._share.bind(this)
         this._focusComment = this._focusComment.bind(this)
+        this._deletePost = this._deletePost.bind(this)
     }
 
     componentDidMount(){
@@ -151,10 +154,39 @@ export default class Post extends React.Component {
             window.location.replace("/post/"+this.props.id+"?comment")
     }
 
+    _deletePost(){
+        axios.delete('http://localhost:3001/post/'+this.props.id).then((res) => {
+            this.setState({
+                show: true,
+                modalTitle: res.data.message == 'Erro no servidor' ? 'Erro' : 'Sucesso',
+                modalText: res.data.message,
+                modalResponse: () => {this.setState({show: false})}
+            })
+            if(res.data.message != 'Erro no servidor')
+                this.props._removePost(this.props.key)
+        })
+    }
+
     render(){
         const post_content = this._getPostContent()
         return (
             <div className="postContainer">
+                <SweetAlert
+                    show={this.state.show}
+                    title={this.state.modalTitle}
+                    text={this.state.modalText}
+                    onConfirm={this.state.modalResponse}
+                />
+                {localStorage.getItem('user_id') == this.props.user_id && window.location.pathname == '/user/posts' && (
+                    <div class="button-options">
+                        <Link to={`/post/${this.props.id}/edit`} className="btn btn-outline-warning">
+                            <i className="fa fa-edit" />
+                        </Link>
+                        <button onClick={this._deletePost} type="button" className="btn btn-outline-danger ml-2">
+                            <i className="fa fa-trash" />
+                        </button>
+                    </div>
+                )}
                 <div className="text-left ml-3 mt-2 form-inline">
                     <img className="img-post-icon" src={this.props.url_category} /> 
                     <div className="mt-1 ml-2"> {this.props.category} · {this.props.time}</div>

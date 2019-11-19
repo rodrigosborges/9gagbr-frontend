@@ -7,6 +7,12 @@
   color: #f44336 !important;
 }
 
+.button-options{
+  position: absolute;
+  top: 20px;
+  right: 36px;
+}
+
 .navbar-top{
   background-color: #292a39 !important;
   background-image:

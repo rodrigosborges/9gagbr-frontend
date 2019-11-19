@@ -1,20 +1,22 @@
 import React from 'react';
-import Post from '../Post/Post';
+import Post from './Post';
 import axios from 'axios'
 import {formatDate} from '../../utils/format'
 
-export default class Feed extends React.Component {
+export default class UserPosts extends React.Component {
     constructor(props){
         super(props)
         this.state = {
             posts : []
         }
+        this._removePost = this._removePost.bind(this)
     }
     
     componentDidMount(){
-        this._getPosts(0)
         this.setState({
             user_id: localStorage.getItem('user_id')
+        }, () => {
+            this._getPosts(0)
         })
     }
 
@@ -22,16 +24,14 @@ export default class Feed extends React.Component {
         if (this.props.category !== prevProps.category) {
             this._getPosts(0)
         }
-      }
+    }
 
     _getPosts(page){
         const params = new URLSearchParams(this.props.query)
 
-        var url = 'http://localhost:3001/post/'
+        var url = 'http://localhost:3001/post/user/'+this.state.user_id
 
-        url += this.props.category ? this.props.category : ( params.get('search') ? "search/" : "" )
-
-        var request = this.props.category ? axios.get(url) : ( params.get('search') ? axios.post(url, {search: params.get('search')}) : axios.get(url))
+        var request = axios.get(url)
 
         request
         .then((res) => {
@@ -55,6 +55,14 @@ export default class Feed extends React.Component {
         })
     }
 
+    _removePost(key){
+        var posts = this.state.posts
+        posts.splice(key,1)
+        this.setState({
+            posts
+        })
+    }
+
     render(){
         return (
             <div>
@@ -73,6 +81,8 @@ export default class Feed extends React.Component {
                                 id={post.id}
                                 link={true}
                                 user_id={this.state.user_id}
+                                key={key}
+                                _removePost={this._removePost}
                             />
                         </div>
                     </div>
