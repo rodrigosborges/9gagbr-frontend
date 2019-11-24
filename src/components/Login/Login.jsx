@@ -38,7 +38,7 @@ export default class Feed extends React.Component {
     }
 
     _login(){
-        axios.post('http://'+(process.env.SERVER ? process.env.SERVER : 'localhost:3001')+'/user/login', this.state.login)
+        axios.post('https://ninegag-backend.herokuapp.com/user/login', this.state.login)
         .then((res) => {
             if(res.data.message == 'E-mail ou senha incorretos'){
                 this.setState({
@@ -56,7 +56,7 @@ export default class Feed extends React.Component {
     }
 
     _register(){
-        axios.post('http://'+(process.env.SERVER ? process.env.SERVER : 'localhost:3001')+'/user/', this.state.register)
+        axios.post('https://ninegag-backend.herokuapp.com/user/', this.state.register)
         .then((res) => {
             var success = res.data.message == 'Usuario cadastrado com sucesso'
 
@@ -127,8 +127,8 @@ export default class Feed extends React.Component {
     render(){
         return (
             <div className="div-content div-background">
-                <div class="stars"></div>
-                <div class="twinkling"></div>
+                <div className="stars"></div>
+                <div className="twinkling"></div>
                 <div className="row h-100">
                     <div className="login-content col-xl-8 offset-xl-2 col-lg-10 offset-lg-1 my-auto">
                         <SweetAlert

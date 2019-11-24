@@ -10,6 +10,9 @@ export default class Post extends React.Component {
             liked: false,
             unliked: false,
             show: false,
+            modalTitle: '',
+            modalText: '',
+            modalResponse: () => {},
         }
 
         this._share = this._share.bind(this)
@@ -93,7 +96,7 @@ export default class Post extends React.Component {
                 })
             }
 
-            axios.post('http://'+(process.env.SERVER ? process.env.SERVER : 'localhost:3001')+'/reaction/', data)
+            axios.post('https://ninegag-backend.herokuapp.com/reaction/', data)
         }else{
             window.location.replace("/login")
         }
@@ -123,7 +126,7 @@ export default class Post extends React.Component {
                 })
             }
 
-            axios.post('http://'+(process.env.SERVER ? process.env.SERVER : 'localhost:3001')+'/reaction/', data)
+            axios.post('https://ninegag-backend.herokuapp.com/reaction/', data)
         }else{
             window.location.replace("/login")
         }
@@ -155,7 +158,7 @@ export default class Post extends React.Component {
     }
 
     _deletePost(){
-        axios.delete('http://'+(process.env.SERVER ? process.env.SERVER : 'localhost:3001')+'/post/'+this.props.id).then((res) => {
+        axios.delete('https://ninegag-backend.herokuapp.com/post/'+this.props.id).then((res) => {
             this.setState({
                 show: true,
                 modalTitle: res.data.message == 'Erro no servidor' ? 'Erro' : 'Sucesso',

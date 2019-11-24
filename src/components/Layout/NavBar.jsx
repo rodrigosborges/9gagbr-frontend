@@ -80,9 +80,9 @@ export default class NavBar extends React.Component {
                     )}
 
                     <form action="/" className="form-inline mx-2 my-2">
-                        <div class="input-group flex-fill">
+                        <div className="input-group flex-fill">
                             <input id="procurar" name="search" type="text" className="form-control" placeholder="Procurar" />
-                            <div class="input-group-append">
+                            <div className="input-group-append">
                                 <button className="btn button-navbar ml-2" type="submit">
                                     <i className="fa fa-search" />
                                 </button>                            

@@ -60,7 +60,7 @@ export default class Feed extends React.Component {
 
         if(this._inputValidate('comment')){
             axios.post(
-                'http://'+(process.env.SERVER ? process.env.SERVER : 'localhost:3001')+'/comment/', {
+                'https://ninegag-backend.herokuapp.com/comment/', {
                     'message': this.state.comment,
                     'user_id': this.state.user_id,
                     'post_id': this.state.post.id
@@ -102,7 +102,7 @@ export default class Feed extends React.Component {
     }
 
     _getPost(){
-        axios.get('http://'+(process.env.SERVER ? process.env.SERVER : 'localhost:3001')+'/post/find/'+this.props.post_id)
+        axios.get('https://ninegag-backend.herokuapp.com/post/find/'+this.props.post_id)
         .then((res) => {
             var post = res.data
 
@@ -134,9 +134,9 @@ export default class Feed extends React.Component {
                 post: {
                     id: post.id,
                     title: post.title,
-                    url: 'http://'+(process.env.SERVER ? process.env.SERVER : 'localhost:3001')+'/storage/post/'+post.path,
+                    url: 'https://ninegag-backend.herokuapp.com/storage/post/'+post.path,
                     category: post.category.name,
-                    url_category: 'http://'+(process.env.SERVER ? process.env.SERVER : 'localhost:3001')+'/storage/category/'+post.category.path,
+                    url_category: 'https://ninegag-backend.herokuapp.com/storage/category/'+post.category.path,
                     comments: post.comments.length,
                     time: this._formatDate(post.createdAt),
                     positives: post.positives,

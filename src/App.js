@@ -21,14 +21,13 @@ function RouteWithLayout({layout, component, ...rest}){
 export default class App extends React.Component {
 
   componentDidMount(){
-    console.log(process.env)
 
     var data = {
       user_id: localStorage.getItem('user_id'),
       token: localStorage.getItem('token')
     }
 
-    axios.post('http://'+(process.env.SERVER ? process.env.SERVER : 'localhost:3001')+'/user/checkauth', data)
+    axios.post('https://ninegag-backend.herokuapp.com/user/checkauth', data)
     .then((res) => {
       if(!res.data){
         localStorage.removeItem('user_id')

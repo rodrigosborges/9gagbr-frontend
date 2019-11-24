@@ -52,8 +52,8 @@ export default class Layout extends React.Component {
                     </div>
                     <NavBar />
                     <div id="div-content" className="div-background div-background-ext">
-                        <div class="stars"></div>
-                        <div class="twinkling"></div>
+                        <div className="stars"></div>
+                        <div className="twinkling"></div>
                         <div className="container my-3">
                             <div className="col-md-10 offset-md-1">
                                 {this.props.children}
