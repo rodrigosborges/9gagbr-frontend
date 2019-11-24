@@ -21,6 +21,8 @@ function RouteWithLayout({layout, component, ...rest}){
 export default class App extends React.Component {
 
   componentDidMount(){
+    console.log(process.env)
+
     var data = {
       user_id: localStorage.getItem('user_id'),
       token: localStorage.getItem('token')
