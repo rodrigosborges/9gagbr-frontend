@@ -26,7 +26,7 @@ export default class App extends React.Component {
       token: localStorage.getItem('token')
     }
 
-    axios.post('http://localhost:3001/user/checkauth', data)
+    axios.post('http://'+(process.env.SERVER ? process.env.SERVER : 'localhost:3001')+'/user/checkauth', data)
     .then((res) => {
       if(!res.data){
         localStorage.removeItem('user_id')

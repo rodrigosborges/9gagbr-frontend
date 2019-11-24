@@ -31,7 +31,7 @@ export default class Feed extends React.Component {
     _getPosts(page){
         const params = new URLSearchParams(this.props.query)
 
-        var url = 'http://localhost:3001/post/'
+        var url = 'http://'+(process.env.SERVER ? process.env.SERVER : 'localhost:3001')+'/post/'
 
         url += this.props.category ? this.props.category : ( params.get('search') ? "search/" : "" )
 
@@ -46,9 +46,9 @@ export default class Feed extends React.Component {
                 res.data.data.map(post => {
                     posts.push({
                         title: post.title,
-                        url: 'http://localhost:3001/storage/post/'+post.path,
+                        url: 'http://'+(process.env.SERVER ? process.env.SERVER : 'localhost:3001')+'/storage/post/'+post.path,
                         category: post.category.name,
-                        url_category: 'http://localhost:3001/storage/category/'+post.category.path,
+                        url_category: 'http://'+(process.env.SERVER ? process.env.SERVER : 'localhost:3001')+'/storage/category/'+post.category.path,
                         comments: post.comments.length,
                         time: formatDate(post.createdAt),
                         id: post.id,
