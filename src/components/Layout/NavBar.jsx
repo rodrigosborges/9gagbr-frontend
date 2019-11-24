@@ -34,15 +34,15 @@ export default class NavBar extends React.Component {
                     <span className="navbar-toggler-icon"></span>
                 </button>
 
-                <div className="collapse navbar-collapse" id="navbarSupportedContent">
+                <div className="collapse navbar-collapse center-navbar" id="navbarSupportedContent">
 
                     <ul className="navbar-nav ml-3 mr-auto">
                     </ul>
 
                     {this.state.user_id && (
-                        <ul className="navbar-nav mx-2">
+                        <ul className="navbar-nav mx-2 my-2">
                             <li className="nav-item">
-                                <Link to="/post/create" className="btn button-navbar my-2 my-sm-0 mr-3">
+                                <Link to="/post/create" className="btn btn-block button-navbar my-2 my-sm-0 mr-3">
                                     Publicar
                                 </Link>
                             </li>
@@ -50,9 +50,9 @@ export default class NavBar extends React.Component {
                     )}
 
                     {this.state.user_id && (
-                        <ul className="navbar-nav mx-2">
+                        <ul className="navbar-nav mx-2 my-2">
                             <li className="nav-item">
-                                <Link to="/user/posts" className="btn button-navbar my-2 my-sm-0 mr-3">
+                                <Link to="/user/posts" className="btn btn-block button-navbar my-2 my-sm-0 mr-3">
                                     Minhas publicações
                                 </Link>
                             </li>
@@ -60,9 +60,9 @@ export default class NavBar extends React.Component {
                     )}
 
                     {!this.state.user_id && (
-                        <ul className="navbar-nav mx-2">
+                        <ul className="navbar-nav mx-2 my-2">
                             <li className="nav-item">
-                                <Link to="/login" className="btn button-navbar my-2 my-sm-0 mr-3">
+                                <Link to="/login" className="btn btn-block button-navbar my-2 my-sm-0 mr-3">
                                     Entrar
                                 </Link>
                             </li>
@@ -70,22 +70,25 @@ export default class NavBar extends React.Component {
                     )}
 
                     {this.state.user_id && (
-                        <ul className="navbar-nav mx-2">
+                        <ul className="navbar-nav mx-2 my-2">
                             <li className="nav-item">
-                                <button onClick={this._logout} className="btn button-navbar my-2 my-sm-0 mr-3">
+                                <button onClick={this._logout} className="btn btn-block button-navbar my-2 my-sm-0 mr-3">
                                     Sair
                                 </button>
                             </li>
                         </ul>
                     )}
 
-                    <form action="/" className="form-inline">
-                        <div className="form-group">
+                    <form action="/" className="form-inline mx-2 my-2">
+                        <div class="input-group flex-fill">
                             <input id="procurar" name="search" type="text" className="form-control" placeholder="Procurar" />
-                            <button className="btn button-navbar ml-2" type="submit">
-                                <i className="fa fa-search" />
-                            </button>
+                            <div class="input-group-append">
+                                <button className="btn button-navbar ml-2" type="submit">
+                                    <i className="fa fa-search" />
+                                </button>                            
+                            </div> 
                         </div>
+                           
                     </form>
 
                 </div>

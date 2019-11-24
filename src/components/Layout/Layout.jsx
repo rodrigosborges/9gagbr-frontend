@@ -3,7 +3,6 @@ import Sidebar from "react-sidebar";
 import NavBar from './NavBar'
 import SideBarContent from './SideBarContent'
 import '../../css/Stars.css'
-import '../../css/CreatePost.css'
 
 const mql = window.matchMedia(`(min-width: 800px)`);
 
@@ -35,33 +34,33 @@ export default class Layout extends React.Component {
         this.setState({ sidebarOpen: mql.matches })
     }
 
+
     render() {
         return (
-            <div>
-            <Sidebar
-                sidebar={
-                    <SideBarContent/> 
-                }
-                docked={this.state.sidebarOpen && window.innerWidth > 800}
-                open={this.state.sidebarOpen && window.innerWidth < 800}
-            >
-                <div className={(this.state.sidebarOpen && window.innerWidth < 800) ? "sidebar-button-hide" : "sidebar-button-show"}>
-                    <button className="btn button-navbar" type="submit" onClick={() => this.onSetSidebarOpen(!this.state.sidebarOpen)}>
-                        <i className={"fa fa-"+(!this.state.sidebarOpen ? 'list' : 'times')} />
-                    </button>
-                </div>
-                <NavBar />
-                <div id="div-content" className="div-background div-background-ext">
-                    <div id='stars'></div>
-                    <div id='stars2'></div>
-                    <div id='stars3'></div>
-                    <div className="container my-3">
-                        <div className="col-md-10 offset-md-1">
-                            {this.props.children}
+            <div id="layout">
+                <Sidebar
+                    sidebar={
+                        <SideBarContent/> 
+                    }
+                    docked={this.state.sidebarOpen && window.innerWidth > 800}
+                    open={this.state.sidebarOpen && window.innerWidth < 800}
+                >
+                    <div className={(this.state.sidebarOpen && window.innerWidth < 800) ? "sidebar-button-hide" : "sidebar-button-show"}>
+                        <button className="btn button-navbar" type="submit" onClick={() => this.onSetSidebarOpen(!this.state.sidebarOpen)}>
+                            <i className={"fa fa-"+(!this.state.sidebarOpen ? 'list' : 'times')} />
+                        </button>
+                    </div>
+                    <NavBar />
+                    <div id="div-content" className="div-background div-background-ext">
+                        <div class="stars"></div>
+                        <div class="twinkling"></div>
+                        <div className="container my-3">
+                            <div className="col-md-10 offset-md-1">
+                                {this.props.children}
+                            </div>
                         </div>
                     </div>
-                </div>
-            </Sidebar>
+                </Sidebar>
 
             </div>
         )

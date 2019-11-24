@@ -127,9 +127,8 @@ export default class Feed extends React.Component {
     render(){
         return (
             <div className="div-content div-background">
-                <div id='stars'></div>
-                <div id='stars2'></div>
-                <div id='stars3'></div>
+                <div class="stars"></div>
+                <div class="twinkling"></div>
                 <div className="row h-100">
                     <div className="login-content col-xl-8 offset-xl-2 col-lg-10 offset-lg-1 my-auto">
                         <SweetAlert

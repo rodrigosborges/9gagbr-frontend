@@ -7,8 +7,11 @@ export default class Feed extends React.Component {
     constructor(props){
         super(props)
         this.state = {
-            posts : []
+            posts : [], 
+            page: 1,
+            end: false,
         }
+        this.handleScroll = this.handleScroll.bind(this)
     }
     
     componentDidMount(){
@@ -16,13 +19,14 @@ export default class Feed extends React.Component {
         this.setState({
             user_id: localStorage.getItem('user_id')
         })
+        document.getElementById('layout').addEventListener("scroll", this.handleScroll, true);
     }
 
     componentDidUpdate(prevProps) {
         if (this.props.category !== prevProps.category) {
             this._getPosts(0)
         }
-      }
+    }
 
     _getPosts(page){
         const params = new URLSearchParams(this.props.query)
@@ -30,6 +34,8 @@ export default class Feed extends React.Component {
         var url = 'http://localhost:3001/post/'
 
         url += this.props.category ? this.props.category : ( params.get('search') ? "search/" : "" )
+
+        url += '?page='+this.state.page
 
         var request = this.props.category ? axios.get(url) : ( params.get('search') ? axios.post(url, {search: params.get('search')}) : axios.get(url))
 
@@ -50,9 +56,26 @@ export default class Feed extends React.Component {
                         negatives: post.negatives
                     })
                 })
-                this.setState({posts})
+                this.setState({
+                    posts,
+                    end: (res.data.data.length == 0 ? true : false),
+                })
             }
         })
+    }
+
+    handleScroll = e => {
+        if(!this.state.end){
+            let element = e.target
+    
+            if (element.scrollHeight - element.scrollTop === element.clientHeight) {
+                this.setState({
+                    page: this.state.page+1
+                }, () => {
+                    this._getPosts(this.state.page)
+                })
+            }
+        }
     }
 
     render(){
@@ -76,6 +99,9 @@ export default class Feed extends React.Component {
                             />
                         </div>
                     </div>
+                )}
+                {this.state.end && (
+                    <div className="end-message mt-3 mb-3 text-center">Não há outras publicações no momento</div>
                 )}
             </div>
         )

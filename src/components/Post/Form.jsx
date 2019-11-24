@@ -11,8 +11,8 @@ import SweetAlert from 'sweetalert-react';
 import 'sweetalert/dist/sweetalert.css';
 import FormHelperText from '@material-ui/core/FormHelperText';
 import {Validate} from '../../utils/validation'
-import { responsiveFontSizes } from '@material-ui/core';
 import { Redirect } from "react-router-dom";
+import '../../css/CreatePost.css';
 
 
 export default class Form extends React.Component {

@@ -1,7 +1,6 @@
 import React from 'react';
 import Post from './Post';
 import Comment from './Comment';
-import '../../css/Stars.css'
 import '../../css/Post.css'
 import axios from 'axios'
 import TextField from '@material-ui/core/TextField'
@@ -208,11 +207,12 @@ export default class Feed extends React.Component {
                                                 name="comment"
                                                 variant="outlined"
                                                 multiline
+                                                margin="dense"
                                                 onChange={this.handleChange.bind(this)}
                                             />
                                         </div>
                                         <div className="col-md-2 col-sm-3 pt-3">
-                                            <button onClick={() => {this.sendComment()}} className="btn btn-lg button-navbar mt-1">
+                                            <button onClick={() => {this.sendComment()}} className="btn btn-lg button-navbar mt-2">
                                                 <i className="fas fa-share"></i>
                                             </button>
                                         </div>

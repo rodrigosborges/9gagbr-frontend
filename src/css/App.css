@@ -3,6 +3,19 @@
   height: 50px;
 }
 
+.end-message{
+  font-size: 22px;
+  color: #A69CAC;
+}
+
+
+@media (max-width: 767px) {
+  .center-navbar{
+    text-align: center
+  }
+}
+
+
 .error-label{
   color: #f44336 !important;
 }

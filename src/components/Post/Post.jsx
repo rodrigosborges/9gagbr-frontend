@@ -178,7 +178,7 @@ export default class Post extends React.Component {
                     onConfirm={this.state.modalResponse}
                 />
                 {localStorage.getItem('user_id') == this.props.user_id && window.location.pathname == '/user/posts' && (
-                    <div class="button-options">
+                    <div className="button-options">
                         <Link to={`/post/${this.props.id}/edit`} className="btn btn-outline-warning">
                             <i className="fa fa-edit" />
                         </Link>
