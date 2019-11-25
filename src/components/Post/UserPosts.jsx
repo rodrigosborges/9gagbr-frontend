@@ -29,7 +29,7 @@ export default class UserPosts extends React.Component {
     _getPosts(page){
         const params = new URLSearchParams(this.props.query)
 
-        var url = 'https://ninegag-backend.herokuapp.com/post/user/'+this.state.user_id
+        var url = 'http://localhost:3001/post/user/'+this.state.user_id
 
         var request = axios.get(url)
 
@@ -40,9 +40,9 @@ export default class UserPosts extends React.Component {
                 res.data.data.map(post => {
                     posts.push({
                         title: post.title,
-                        url: 'https://ninegag-backend.herokuapp.com/storage/post/'+post.path,
+                        url: 'http://localhost:3001/storage/post/'+post.path,
                         category: post.category.name,
-                        url_category: 'https://ninegag-backend.herokuapp.com/storage/category/'+post.category.path,
+                        url_category: 'http://localhost:3001/storage/category/'+post.category.path,
                         comments: post.comments.length,
                         time: formatDate(post.createdAt),
                         id: post.id,

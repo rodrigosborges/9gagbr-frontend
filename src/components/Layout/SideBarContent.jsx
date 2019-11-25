@@ -32,7 +32,7 @@ export default class SideBarContent extends React.Component{
 
     _getRandom(e){
         e.preventDefault()
-        axios.get('https://ninegag-backend.herokuapp.com/post/Aleatório')
+        axios.get('http://localhost:3001/post/Aleatório')
         .then((res) => {
             this.setState({
                 redirect: <Redirect to={"/post/"+res.data} />
@@ -41,7 +41,7 @@ export default class SideBarContent extends React.Component{
     }
 
     _getCategories(){
-        axios.get('https://ninegag-backend.herokuapp.com/category/')
+        axios.get('http://localhost:3001/category/')
         .then((res) => {
             var categories = this.state.categories
             if(res.data.data){
@@ -49,7 +49,7 @@ export default class SideBarContent extends React.Component{
                     categories.push({
                         id: category.id,
                         name: category.name,
-                        url: 'https://ninegag-backend.herokuapp.com/storage/category/'+category.path
+                        url: 'http://localhost:3001/storage/category/'+category.path
                     })
                 })
             this.setState({categories})

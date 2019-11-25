@@ -96,7 +96,7 @@ export default class Post extends React.Component {
                 })
             }
 
-            axios.post('https://ninegag-backend.herokuapp.com/reaction/', data)
+            axios.post('http://localhost:3001/reaction/', data)
         }else{
             window.location.replace("/login")
         }
@@ -126,7 +126,7 @@ export default class Post extends React.Component {
                 })
             }
 
-            axios.post('https://ninegag-backend.herokuapp.com/reaction/', data)
+            axios.post('http://localhost:3001/reaction/', data)
         }else{
             window.location.replace("/login")
         }
@@ -158,7 +158,7 @@ export default class Post extends React.Component {
     }
 
     _deletePost(){
-        axios.delete('https://ninegag-backend.herokuapp.com/post/'+this.props.id).then((res) => {
+        axios.delete('http://localhost:3001/post/'+this.props.id).then((res) => {
             this.setState({
                 show: true,
                 modalTitle: res.data.message == 'Erro no servidor' ? 'Erro' : 'Sucesso',
