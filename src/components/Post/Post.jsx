@@ -96,7 +96,7 @@ export default class Post extends React.Component {
                 })
             }
 
-            axios.post(('http://'+(window.location.hostname)+':3001')+'/reaction/', data)
+            axios.post(('http://34.95.246.158')+'/reaction/', data)
         }else{
             window.location.replace("/login")
         }
@@ -126,7 +126,7 @@ export default class Post extends React.Component {
                 })
             }
 
-            axios.post(('http://'+(window.location.hostname)+':3001')+'/reaction/', data)
+            axios.post(('http://34.95.246.158')+'/reaction/', data)
         }else{
             window.location.replace("/login")
         }
@@ -158,7 +158,7 @@ export default class Post extends React.Component {
     }
 
     _deletePost(){
-        axios.delete(('http://'+(window.location.hostname)+':3001')+'/post/'+this.props.id).then((res) => {
+        axios.delete(('http://34.95.246.158')+'/post/'+this.props.id).then((res) => {
             this.setState({
                 show: true,
                 modalTitle: res.data.message == 'Erro no servidor' ? 'Erro' : 'Sucesso',

@@ -60,7 +60,7 @@ export default class Feed extends React.Component {
 
         if(this._inputValidate('comment')){
             axios.post(
-                ('http://'+(window.location.hostname)+':3001')+'/comment/', {
+                ('http://34.95.246.158')+'/comment/', {
                     'message': this.state.comment,
                     'user_id': this.state.user_id,
                     'post_id': this.state.post.id
@@ -102,7 +102,7 @@ export default class Feed extends React.Component {
     }
 
     _getPost(){
-        axios.get(('http://'+(window.location.hostname)+':3001')+'/post/find/'+this.props.post_id)
+        axios.get(('http://34.95.246.158')+'/post/find/'+this.props.post_id)
         .then((res) => {
             var post = res.data
 
@@ -134,9 +134,9 @@ export default class Feed extends React.Component {
                 post: {
                     id: post.id,
                     title: post.title,
-                    url: ('http://'+(window.location.hostname)+':3001')+'/storage/post/'+post.path,
+                    url: ('http://34.95.246.158')+'/storage/post/'+post.path,
                     category: post.category.name,
-                    url_category: ('http://'+(window.location.hostname)+':3001')+'/storage/category/'+post.category.path,
+                    url_category: ('http://34.95.246.158')+'/storage/category/'+post.category.path,
                     comments: post.comments.length,
                     time: this._formatDate(post.createdAt),
                     positives: post.positives,

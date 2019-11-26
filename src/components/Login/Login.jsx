@@ -38,7 +38,7 @@ export default class Feed extends React.Component {
     }
 
     _login(){
-        axios.post(('http://'+(window.location.hostname)+':3001')+'/user/login', this.state.login)
+        axios.post(('http://34.95.246.158')+'/user/login', this.state.login)
         .then((res) => {
             if(res.data.message == 'E-mail ou senha incorretos'){
                 this.setState({
@@ -56,7 +56,7 @@ export default class Feed extends React.Component {
     }
 
     _register(){
-        axios.post(('http://'+(window.location.hostname)+':3001')+'/user/', this.state.register)
+        axios.post(('http://34.95.246.158')+'/user/', this.state.register)
         .then((res) => {
             var success = res.data.message == 'Usuario cadastrado com sucesso'
 

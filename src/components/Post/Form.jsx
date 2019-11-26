@@ -67,7 +67,7 @@ export default class Form extends React.Component {
     }
 
     _getPost(){
-        axios.get(('http://'+(window.location.hostname)+':3001')+'/post/find/'+this.props.id)
+        axios.get(('http://34.95.246.158')+'/post/find/'+this.props.id)
         .then((res) => {
             if(res.data.id && this.state.user_id == res.data.user_id){
                 this.setState({
@@ -121,7 +121,7 @@ export default class Form extends React.Component {
     }
 
     _getCategories(){
-        axios.get(('http://'+(window.location.hostname)+':3001')+'/category/')
+        axios.get(('http://34.95.246.158')+'/category/')
         .then((res) => {
             var categories = this.state.categories
             res.data.data.map(category => {
@@ -139,7 +139,7 @@ export default class Form extends React.Component {
             
             if(this.props.id != null){
                 var request = axios.put(
-                    ('http://'+(window.location.hostname)+':3001')+'/post/'+this.props.id, 
+                    ('http://34.95.246.158')+'/post/'+this.props.id, 
                     {
                         'title': this.state.title,
                         'category_id': this.state.category_id,
@@ -156,7 +156,7 @@ export default class Form extends React.Component {
                 data.set('user_id', this.state.user_id)
                 
                 var request = axios.post(
-                    ('http://'+(window.location.hostname)+':3001')+'/post/', 
+                    ('http://34.95.246.158')+'/post/', 
                     data,
                     { headers: {'Content-Type': 'multipart/form-data' }}
                 )
