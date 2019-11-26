@@ -146,7 +146,7 @@ export default class Feed extends React.Component {
                                         <img src={Logo}></img>
                                     </div>
                                     <div className={window.innerWidth < 800 ? "col-4 my-auto" : ""}>
-                                        <div className={window.innerWidth < 800 ? "mb-4 mt-4" : "my-5"}>
+                                        <div className={window.innerWidth < 800 ? "mb-2 mt-2" : "my-5"}>
                                             <span className="form-login-info-title">Não possui conta?</span>
                                         </div>
                                         <div  className={window.innerWidth < 800 ? "mb-4" : ""}>
