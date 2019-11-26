@@ -21,13 +21,12 @@ function RouteWithLayout({layout, component, ...rest}){
 export default class App extends React.Component {
 
   componentDidMount(){
-
     var data = {
       user_id: localStorage.getItem('user_id'),
       token: localStorage.getItem('token')
     }
 
-    axios.post('http://localhost:3001/user/checkauth', data)
+    axios.post(('http://'+(window.location.hostname)+':3001')+'/user/checkauth', data)
     .then((res) => {
       if(!res.data){
         localStorage.removeItem('user_id')

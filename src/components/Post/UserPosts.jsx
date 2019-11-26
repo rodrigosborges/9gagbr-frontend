@@ -29,7 +29,7 @@ export default class UserPosts extends React.Component {
     _getPosts(page){
         const params = new URLSearchParams(this.props.query)
 
-        var url = 'http://localhost:3001/post/user/'+this.state.user_id
+        var url = ('http://'+(window.location.hostname)+':3001')+'/post/user/'+this.state.user_id
 
         var request = axios.get(url)
 
@@ -40,9 +40,9 @@ export default class UserPosts extends React.Component {
                 res.data.data.map(post => {
                     posts.push({
                         title: post.title,
-                        url: 'http://localhost:3001/storage/post/'+post.path,
+                        url: ('http://'+(window.location.hostname)+':3001')+'/storage/post/'+post.path,
                         category: post.category.name,
-                        url_category: 'http://localhost:3001/storage/category/'+post.category.path,
+                        url_category: ('http://'+(window.location.hostname)+':3001')+'/storage/category/'+post.category.path,
                         comments: post.comments.length,
                         time: formatDate(post.createdAt),
                         id: post.id,

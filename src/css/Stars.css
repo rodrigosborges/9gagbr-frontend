@@ -1,6 +1,6 @@
 .div-background{
     overflow: hidden;
-    min-height: calc(100% - 66px);
+    min-height: calc(100% - 70px);
 }
 
 @keyframes move-twink-back {
@@ -20,23 +20,6 @@
     to {background-position:-10000px 5000px;}
 }
 
-@keyframes move-clouds-back {
-    from {background-position:0 0;}
-    to {background-position:10000px 0;}
-}
-@-webkit-keyframes move-clouds-back {
-    from {background-position:0 0;}
-    to {background-position:10000px 0;}
-}
-@-moz-keyframes move-clouds-back {
-    from {background-position:0 0;}
-    to {background-position:10000px 0;}
-}
-@-ms-keyframes move-clouds-back {
-    from {background-position: 0;}
-    to {background-position:10000px 0;}
-}
-
 .stars, .twinkling {
   position:fixed;
   top:0;
@@ -47,12 +30,12 @@
 }
 
 .stars {
-  background:#000 url(http://www.script-tutorials.com/demos/360/images/stars.png) repeat top center;
+  background:#000 url(../stars.png) repeat top center;
   z-index:-2;
 }
 
 .twinkling{
-  background:transparent url(http://www.script-tutorials.com/demos/360/images/twinkling.png) repeat top center;
+  background:transparent url(../twinkling.png) repeat top center;
   z-index:-1;
 
   -moz-animation:move-twink-back 200s linear infinite;
