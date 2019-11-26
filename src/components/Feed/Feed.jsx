@@ -24,8 +24,9 @@ export default class Feed extends React.Component {
 
     componentDidUpdate(prevProps) {
         if (this.props.category !== prevProps.category) {
-            this.setState({page:1, end: false,})
-            this._getPosts(0)
+            this.setState({page:1, end: false,}, () => {
+                this._getPosts(0)
+            })
         }
     }
 
@@ -40,9 +41,15 @@ export default class Feed extends React.Component {
 
         var request = this.props.category ? axios.get(url) : ( params.get('search') ? axios.post(url, {search: params.get('search')}) : axios.get(url))
 
+        if(page === 0){
+            this.setState({
+                posts: []
+            })
+        }
+
         request
         .then((res) => {
-            var posts = page === 0 ? [] : this.state.posts
+            var posts = this.state.posts
             if(res.data.data){
                 res.data.data.map(post => {
                     posts.push({
@@ -69,7 +76,7 @@ export default class Feed extends React.Component {
         if(!this.state.end){
             let element = e.target
     
-            if (element.scrollHeight - element.scrollTop === element.clientHeight) {
+            if (element.scrollHeight - element.scrollTop <= element.clientHeight) {
                 this.setState({
                     page: this.state.page+1
                 }, () => {
