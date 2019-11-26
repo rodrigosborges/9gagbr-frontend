@@ -24,6 +24,7 @@ export default class Feed extends React.Component {
 
     componentDidUpdate(prevProps) {
         if (this.props.category !== prevProps.category) {
+            this.setState({page:1, end: false,})
             this._getPosts(0)
         }
     }
