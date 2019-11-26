@@ -8,6 +8,11 @@
   color: #A69CAC;
 }
 
+@media (max-width: 600px) {
+  .container{
+    padding:0 !important;
+  }
+}
 
 @media (max-width: 767px) {
   .center-navbar{

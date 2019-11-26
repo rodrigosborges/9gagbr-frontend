@@ -28,6 +28,9 @@ export default class Form extends React.Component {
             validations:{},
             validationErrors: {},
             redirect: null,
+            modalTitle: '',
+            modalText: '',
+            modalResponse: () => {},
         }
 
     }

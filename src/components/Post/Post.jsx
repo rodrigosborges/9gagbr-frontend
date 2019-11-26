@@ -28,7 +28,7 @@ export default class Post extends React.Component {
     }
 
     componentDidUpdate(previousProps, previousState){
-        if (previousProps.id !== this.props.id) {
+        if (this.props.id && previousProps.id !== this.props.id) {
             this._updateComponent()
         }
     }
@@ -63,10 +63,12 @@ export default class Post extends React.Component {
             )
         }else{
             return (
-                <video autoPlay muted preload="auto" loop='loop' >
-                    <source src={this.props.url} className="image-post" type="video/mp4"/>
-                    Seu navegador não suporta esse tipo de vídeo.
-                </video>
+                <div className="embed-responsive embed-responsive-1by1">
+                    <video className="embed-responsive-item" autoPlay muted preload="auto" loop='loop' >
+                        <source src={this.props.url} className="image-post" type="video/mp4"/>
+                        Seu navegador não suporta esse tipo de vídeo.
+                    </video>
+                </div>
             )
         }
     }
@@ -163,10 +165,8 @@ export default class Post extends React.Component {
                 show: true,
                 modalTitle: res.data.message == 'Erro no servidor' ? 'Erro' : 'Sucesso',
                 modalText: res.data.message,
-                modalResponse: () => {this.setState({show: false})}
+                modalResponse: () => {this.setState({show: false});this.props._removePost(this.props.key);}
             })
-            if(res.data.message != 'Erro no servidor')
-                this.props._removePost(this.props.key)
         })
     }
 

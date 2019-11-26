@@ -7,7 +7,8 @@ export default class UserPosts extends React.Component {
     constructor(props){
         super(props)
         this.state = {
-            posts : []
+            posts : [],
+            end: false,
         }
         this._removePost = this._removePost.bind(this)
     }
@@ -50,7 +51,10 @@ export default class UserPosts extends React.Component {
                         negatives: post.negatives
                     })
                 })
-                this.setState({posts})
+                this.setState({
+                    posts,
+                    end: (res.data.data.length == 0 ? true : false),
+                })
             }
         })
     }
@@ -59,7 +63,8 @@ export default class UserPosts extends React.Component {
         var posts = this.state.posts
         posts.splice(key,1)
         this.setState({
-            posts
+            posts,
+            end: posts.length == 0 ? true : false
         })
     }
 
@@ -86,6 +91,9 @@ export default class UserPosts extends React.Component {
                             />
                         </div>
                     </div>
+                )}
+                {this.state.end && (
+                    <div className="end-message mt-3 mb-3 text-center">Não há outras publicações no momento</div>
                 )}
             </div>
         )

@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Route, Link, Switch, Redirect } from "react-router-dom";
+import { BrowserRouter as Router, Route, Switch, Redirect } from "react-router-dom";
 import Layout from './components/Layout/Layout'
 import Feed from './screens/Feed'
 import Login from './screens/Login'
@@ -9,6 +9,8 @@ import NotFound from './screens/NotFound'
 import UserPosts from './screens/UserPosts'
 import './css/App.css'
 import axios from 'axios'
+
+/*eslint-disable */
 
 function RouteWithLayout({layout, component, ...rest}){
   return (
