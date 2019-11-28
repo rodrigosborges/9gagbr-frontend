@@ -30,6 +30,12 @@ exports.Validate = (val, rules) => {
                 result.valid = false
                 result.message =`Esse campo deve conter no máximo ${rules[type]} caracteres`
             }
+        }else if(type == 'email'){
+            var re = /\S+@\S+\.\S+/;
+            if(!re.test(val)){
+                result.valid = false
+                result.message =`Esse campo deve conter um e-mail válido`
+            }
         }
     })
 

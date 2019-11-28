@@ -8,6 +8,7 @@ import Grid from '@material-ui/core/Grid'
 import axios from 'axios'
 import SweetAlert from 'sweetalert-react';
 import 'sweetalert/dist/sweetalert.css';
+import {Validate} from '../../utils/validation'
 
 export default class Feed extends React.Component {
     constructor(props){
@@ -16,15 +17,11 @@ export default class Feed extends React.Component {
         this.state = {
             toRegister: false,
             classForm: "",
-            register: {
-                name: '',
-                email: '',
-                password: '',
-            },
-            login: {
-                email: '',
-                password: '',
-            },
+            register_name: '',
+            register_email: '',
+            register_password: '',
+            login_email: '',
+            login_password: '',
             show: false,
             modalBody: '',
             modalTitle: '',
@@ -34,57 +31,73 @@ export default class Feed extends React.Component {
         }
 
         this._login = this._login.bind(this)
+        
+        this._register = this._register.bind(this)
 
+    }
+
+    componentWillMount(){
+        this._setValidations()
     }
     
     _login(){
-        axios.post(('http://34.95.246.158')+'/user/login', this.state.login)
-        .then((res) => {
-            if(res.data.message == 'E-mail ou senha incorretos'){
-                this.setState({
-                    show: true,
-                    modalTitle: 'Erro',
-                    modalBody: res.data.message,
-                    modalClose: () => {this.setState({show:false})}
-                })
-            }else{
-                localStorage.setItem('token', res.data.token)
-                localStorage.setItem('user_id', res.data.user_id)
-                window.location.replace("/")
+        if(this._inputValidate('login_email') && this._inputValidate('login_password')){
+            var login = {
+                email: this.state.login_email,
+                password: this.state.login_password
             }
-        })
+
+            axios.post(('http://34.95.246.158')+'/user/login', login)
+            .then((res) => {
+                if(res.data.message == 'E-mail ou senha incorretos'){
+                    this.setState({
+                        show: true,
+                        modalTitle: 'Erro',
+                        modalBody: res.data.message,
+                        modalClose: () => {this.setState({show:false})}
+                    })
+                }else{
+                    localStorage.setItem('token', res.data.token)
+                    localStorage.setItem('user_id', res.data.user_id)
+                    window.location.replace("/")
+                }
+            })
+        }
     }
 
     _register(){
-        axios.post(('http://34.95.246.158')+'/user/', this.state.register)
-        .then((res) => {
-            var success = res.data.message == 'Usuario cadastrado com sucesso'
-
-            var funcao = () => {
-                if(success)
-                    document.getElementById("entrar").click()
-                
-                this.setState({
-                    login:{
-                        ...this.state.login,
-                        email: success ? this.state.register.email : this.state.login.email
-                    },
-                    register: {
-                        name: '',
-                        email: '',
-                        password: '',
-                    },
-                    show: false,
-                })
+        if(this._inputValidate('register_email') && this._inputValidate('register_password') && this._inputValidate('register_name')){
+            var register = {
+                name: this.state.register_name,
+                email: this.state.register_email,
+                password: this.state.register_password
             }
 
-            this.setState({
-                show: true,
-                modalTitle: success ? 'Sucesso' : 'Erro',
-                modalBody: res.data.message,
-                modalClose: funcao
+            axios.post(('http://34.95.246.158')+'/user/', register)
+            .then((res) => {
+                var success = res.data.message == 'Usuario cadastrado com sucesso'
+
+                var funcao = () => {
+                    if(success)
+                        document.getElementById("entrar").click()
+                    
+                    this.setState({
+                        login_email: success ? this.state.register_email : this.state.login_email,
+                        register_name: '',
+                        register_email: '',
+                        register_password: '',
+                        show: false,
+                    })
+                }
+
+                this.setState({
+                    show: true,
+                    modalTitle: success ? 'Sucesso' : 'Erro',
+                    modalBody: res.data.message,
+                    modalClose: funcao
+                })
             })
-        })
+        }
     }
 
     _changeForm(toRegister){
@@ -112,6 +125,69 @@ export default class Feed extends React.Component {
                 })
             })
         }
+    }
+
+    _setValidations(){
+        var validations = {}
+
+        validations['login_email'] = {
+            'required'  : true,
+            'email'         :true,
+        }
+
+        validations['login_password'] = {
+            'required'  : true,
+            'minLength'       : 8,
+            'maxLength'       : 50,
+        }
+
+        validations['register_email'] = {
+            'required'      : true,
+            'email'         :true,
+        }
+
+        validations['register_name'] = {
+            'required'  : true,
+            'minLength'       : 3,
+            'maxLength'       : 50,
+        }
+
+        validations['register_password'] = {
+            'required'  : true,
+            'minLength'       : 8,
+            'maxLength'       : 50,
+        }
+
+        this.setState({validations})
+    }
+
+    handleChange(event){
+        event.persist()
+        let change = {}
+        change[event.target.name] = event.target.value
+        this.setState(change, () => {
+            this._inputValidate(event.target.name)
+        })
+    }
+
+    _inputValidate(key){
+        var field = Validate(this.state[key], this.state.validations[key])
+
+        if(field.valid == false){
+            this.setState(prevState => {
+                let validationErrors = Object.assign({}, prevState.validationErrors);
+                validationErrors[key] = field.message;
+                return { validationErrors };
+            })
+        }else{
+            this.setState(prevState => {
+                let validationErrors = Object.assign({}, prevState.validationErrors);
+                validationErrors[key] = "";
+                return { validationErrors };
+            })
+        }
+
+        return field.valid
     }
 
     resize = () => this.forceUpdate()
@@ -187,15 +263,14 @@ export default class Feed extends React.Component {
                                                 </Grid>
                                                 <Grid item xs={11}>
                                                     <TextField 
-                                                        value={this.state.login.email} 
+                                                        error={this.state.validationErrors['login_email'] != "" && this.state.validationErrors['login_email'] != undefined}
+                                                        helperText={this.state.validationErrors['login_email'] && this.state.validationErrors['login_email']}
+                                                        value={this.state.login_email} 
+                                                        name="login_email"
+                                                        onChange={this.handleChange.bind(this)} 
+                                                        value={this.state.login_email} 
                                                         fullWidth 
                                                         label="E-mail" 
-                                                        onChange={(e) => {this.setState({
-                                                            login: {
-                                                                ...this.state.login,
-                                                                email: e.target.value
-                                                            }
-                                                        })}} 
                                                     />
                                                 </Grid>
                                             </Grid>
@@ -207,16 +282,15 @@ export default class Feed extends React.Component {
                                                 </Grid>
                                                 <Grid item xs={11}>
                                                     <TextField 
-                                                        value={this.state.login.password} 
+                                                        error={this.state.validationErrors['login_password'] != "" && this.state.validationErrors['login_password'] != undefined}
+                                                        helperText={this.state.validationErrors['login_password'] && this.state.validationErrors['login_password']}
+                                                        value={this.state.login_password} 
+                                                        name="login_password"
+                                                        onChange={this.handleChange.bind(this)} 
+                                                        value={this.state.login_password} 
                                                         type="password" 
                                                         fullWidth 
                                                         label="Password" 
-                                                        onChange={(e) => {this.setState({
-                                                            login: {
-                                                                ...this.state.login,
-                                                                password: e.target.value
-                                                            }
-                                                        })}} 
                                                     />
                                                 </Grid>
                                             </Grid>
@@ -238,15 +312,14 @@ export default class Feed extends React.Component {
                                                 </Grid>
                                                 <Grid item xs={11}>
                                                     <TextField 
-                                                        value={this.state.register.name} 
+                                                        error={this.state.validationErrors['register_name'] != "" && this.state.validationErrors['register_name'] != undefined}
+                                                        helperText={this.state.validationErrors['register_name'] && this.state.validationErrors['register_name']}
+                                                        value={this.state.register_name} 
+                                                        name="register_name"
+                                                        onChange={this.handleChange.bind(this)} 
+                                                        value={this.state.register_name} 
                                                         fullWidth 
                                                         label="Nome" 
-                                                        onChange={(e) => {this.setState({
-                                                            register: {
-                                                                ...this.state.register,
-                                                                name: e.target.value
-                                                            }
-                                                        })}} 
                                                     />
                                                 </Grid>
                                             </Grid>
@@ -258,15 +331,14 @@ export default class Feed extends React.Component {
                                                 </Grid>
                                                 <Grid item xs={11}>
                                                     <TextField 
-                                                        value={this.state.register.email} 
+                                                        error={this.state.validationErrors['register_email'] != "" && this.state.validationErrors['register_email'] != undefined}
+                                                        helperText={this.state.validationErrors['register_email'] && this.state.validationErrors['register_email']}
+                                                        value={this.state.register_email} 
+                                                        name="register_email"
+                                                        onChange={this.handleChange.bind(this)} 
+                                                        value={this.state.register_email} 
                                                         fullWidth 
                                                         label="E-mail"
-                                                        onChange={(e) => {this.setState({
-                                                            register: {
-                                                                ...this.state.register,
-                                                                email: e.target.value
-                                                            }
-                                                        })}} 
                                                     />
                                                 </Grid>
                                             </Grid>
@@ -278,13 +350,12 @@ export default class Feed extends React.Component {
                                                 </Grid>
                                                 <Grid item xs={11}>
                                                     <TextField 
-                                                        value={this.state.register.password} 
-                                                        onChange={(e) => {this.setState({
-                                                            register: {
-                                                                ...this.state.register,
-                                                                password: e.target.value
-                                                            }
-                                                        })}} 
+                                                        error={this.state.validationErrors['register_password'] != "" && this.state.validationErrors['register_password'] != undefined}
+                                                        helperText={this.state.validationErrors['register_password'] && this.state.validationErrors['register_password']}
+                                                        value={this.state.register_password} 
+                                                        name="register_password"
+                                                        onChange={this.handleChange.bind(this)} 
+                                                        value={this.state.register_password} 
                                                         type="password" 
                                                         fullWidth 
                                                         label="Password" 
