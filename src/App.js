@@ -41,17 +41,17 @@ export default class App extends React.Component {
     return (
       <Router>
         <Switch>
-          <Route path="/login" exact component={Login} />
+          <Route path="/login" exact component={localStorage.getItem('user_id') ? Redirect : Login} />
           <RouteWithLayout layout={Layout} path='/404' exact component={NotFound} />
           <RouteWithLayout layout={Layout} path="/" exact component={Feed} />
 
-          <RouteWithLayout layout={Layout} path="/post/create" exact component={FormPost}/>
+          <RouteWithLayout layout={Layout} path="/post/create" exact component={!localStorage.getItem('user_id') ? Redirect : FormPost} />
 
           <RouteWithLayout layout={Layout} path="/post/:id" exact component={FullPost}/>
 
-          <RouteWithLayout layout={Layout} path="/post/:id/edit" exact component={FormPost} />
+          <RouteWithLayout layout={Layout} path="/post/:id/edit" exact component={!localStorage.getItem('user_id') ? Redirect : FormPost} />
           <RouteWithLayout layout={Layout} path="/category/:category" exact component={Feed} />
-          <RouteWithLayout layout={Layout} path="/user/posts" exact component={UserPosts} />
+          <RouteWithLayout layout={Layout} path="/user/posts" exact component={!localStorage.getItem('user_id') ? Redirect : UserPosts} />
           <Redirect to='/404' />
         </Switch>
       </Router>

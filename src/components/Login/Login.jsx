@@ -36,7 +36,7 @@ export default class Feed extends React.Component {
         this._login = this._login.bind(this)
 
     }
-
+    
     _login(){
         axios.post(('http://34.95.246.158')+'/user/login', this.state.login)
         .then((res) => {
