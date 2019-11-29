@@ -8,7 +8,7 @@ import Grid from '@material-ui/core/Grid'
 import axios from 'axios'
 import SweetAlert from 'sweetalert-react';
 import 'sweetalert/dist/sweetalert.css';
-import {Validate} from '../../utils/validation'
+import {validate, inputValidate, handleChange} from '../../utils/form'
 
 export default class Feed extends React.Component {
     constructor(props){
@@ -34,6 +34,10 @@ export default class Feed extends React.Component {
         
         this._register = this._register.bind(this)
 
+        this.inputValidate = inputValidate.bind(this)
+        this.validate = validate.bind(this)
+        this.handleChange = handleChange.bind(this)
+
     }
 
     componentWillMount(){
@@ -41,7 +45,7 @@ export default class Feed extends React.Component {
     }
     
     _login(){
-        if(this._inputValidate('login_email') && this._inputValidate('login_password')){
+        if(this.inputValidate('login_email') && this.inputValidate('login_password')){
             var login = {
                 email: this.state.login_email,
                 password: this.state.login_password
@@ -66,7 +70,7 @@ export default class Feed extends React.Component {
     }
 
     _register(){
-        if(this._inputValidate('register_email') && this._inputValidate('register_password') && this._inputValidate('register_name')){
+        if(this.inputValidate('register_email') && this.inputValidate('register_password') && this.inputValidate('register_name')){
             var register = {
                 name: this.state.register_name,
                 email: this.state.register_email,
@@ -159,35 +163,6 @@ export default class Feed extends React.Component {
         }
 
         this.setState({validations})
-    }
-
-    handleChange(event){
-        event.persist()
-        let change = {}
-        change[event.target.name] = event.target.value
-        this.setState(change, () => {
-            this._inputValidate(event.target.name)
-        })
-    }
-
-    _inputValidate(key){
-        var field = Validate(this.state[key], this.state.validations[key])
-
-        if(field.valid == false){
-            this.setState(prevState => {
-                let validationErrors = Object.assign({}, prevState.validationErrors);
-                validationErrors[key] = field.message;
-                return { validationErrors };
-            })
-        }else{
-            this.setState(prevState => {
-                let validationErrors = Object.assign({}, prevState.validationErrors);
-                validationErrors[key] = "";
-                return { validationErrors };
-            })
-        }
-
-        return field.valid
     }
 
     resize = () => this.forceUpdate()

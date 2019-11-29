@@ -4,7 +4,7 @@ import Comment from './Comment';
 import '../../css/Post.css'
 import axios from 'axios'
 import TextField from '@material-ui/core/TextField'
-import {Validate} from '../../utils/validation'
+import {validate, inputValidate, handleChange} from '../../utils/form'
 
 export default class Feed extends React.Component {
     constructor(props){
@@ -16,6 +16,9 @@ export default class Feed extends React.Component {
             validations:{},
             validationErrors: {}
         }
+        this.inputValidate = inputValidate.bind(this)
+        this.validate = validate.bind(this)
+        this.handleChange = handleChange.bind(this)
     }
     
     componentDidMount(){
@@ -43,22 +46,13 @@ export default class Feed extends React.Component {
 
         this.setState({validations})
     }
-    
-    handleChange(event){
-        event.persist()
-        let change = {}
-        change[event.target.name] = event.target.type === 'file' ? event.target.files[0] : event.target.value
-        this.setState(change, () => {
-            this._inputValidate(event.target.name)
-        })
-    }
 
     sendComment(){
         if(!this.state.user_id){
             window.location.replace('/login')
         }
 
-        if(this._inputValidate('comment')){
+        if(this.inputValidate('comment')){
             axios.post(
                 ('http://34.95.246.158')+'/comment/', {
                     'message': this.state.comment,
@@ -78,27 +72,6 @@ export default class Feed extends React.Component {
                 }
             })
         }
-    }
-
-
-    _inputValidate(key){
-        var field = Validate(this.state[key], this.state.validations[key])
-
-        if(field.valid == false){
-            this.setState(prevState => {
-                let validationErrors = Object.assign({}, prevState.validationErrors);
-                validationErrors[key] = field.message;
-                return { validationErrors };
-            })
-        }else{
-            this.setState(prevState => {
-                let validationErrors = Object.assign({}, prevState.validationErrors);
-                validationErrors[key] = "";
-                return { validationErrors };
-            })
-        }
-
-        return field.valid
     }
 
     _getPost(){

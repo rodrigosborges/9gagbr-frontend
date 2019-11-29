@@ -10,7 +10,7 @@ import Button from '@material-ui/core/Button';
 import SweetAlert from 'sweetalert-react';
 import 'sweetalert/dist/sweetalert.css';
 import FormHelperText from '@material-ui/core/FormHelperText';
-import {Validate} from '../../utils/validation'
+import {validate, inputValidate, handleChange} from '../../utils/form'
 import { Redirect } from "react-router-dom";
 import '../../css/CreatePost.css';
 
@@ -32,6 +32,10 @@ export default class Form extends React.Component {
             modalText: '',
             modalResponse: () => {},
         }
+
+        this.inputValidate = inputValidate.bind(this)
+        this.validate = validate.bind(this)
+        this.handleChange = handleChange.bind(this)
 
     }
 
@@ -85,39 +89,10 @@ export default class Form extends React.Component {
         })
     }
 
-    handleChange(event){
-        event.persist()
-        let change = {}
-        change[event.target.name] = event.target.type === 'file' ? event.target.files[0] : event.target.value
-        this.setState(change, () => {
-            this._inputValidate(event.target.name)
-        })
-    }
-
-    _inputValidate(key){
-        var field = Validate(this.state[key], this.state.validations[key])
-
-        if(field.valid == false){
-            this.setState(prevState => {
-                let validationErrors = Object.assign({}, prevState.validationErrors);
-                validationErrors[key] = field.message;
-                return { validationErrors };
-            })
-        }else{
-            this.setState(prevState => {
-                let validationErrors = Object.assign({}, prevState.validationErrors);
-                validationErrors[key] = "";
-                return { validationErrors };
-            })
-        }
-
-        return field.valid
-    }
-
     _formValidate(){
         var valid = true
         Object.keys(this.state.validations).map((key) => {
-            if(!this._inputValidate(key))
+            if(!this.inputValidate(key))
                 valid = false
         })
         return valid
